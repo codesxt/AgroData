@@ -130,7 +130,7 @@ export class DashboardComponent implements OnInit{
     this.stationData = [];
     this.lastMeasurements = null;
     for(let i = 0; i<N_DATA; i++){
-      let row = {};
+      let row: any = {};
       row.averageTemperature  = Math.round((Math.random() * 10) + 20);
       row.minimumTemperature  =  row.averageTemperature - 2;
       row.maximumTemperature  = row.averageTemperature + 2;
