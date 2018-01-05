@@ -9,7 +9,7 @@ export class OpenweatherService {
   constructor(
     private http: Http
   ) { }
-  baseURL: string = 'https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/';
+  baseURL: string = 'https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/';
 
   getCurrentWeather(query: string): any{
     let headers = new Headers({  });
