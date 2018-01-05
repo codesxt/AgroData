@@ -146,10 +146,10 @@
       <h4 class="card-title">Pronósticos del Clima</h4>
       <span *ngIf="currentWeather">
         <div class="row">
-          <div class="col-3">
+          <div class="col-12 col-sm-3">
             <table>
               <thead>
-                <th colspan="4">
+                <th colspan="2">
                   <h2>Temperatura Actual</h2>
                 </th>
               </thead>
@@ -192,10 +192,10 @@
               </tbody>
             </table>
           </div>
-          <div class="col-9" *ngIf="weatherForecast">
+          <div class="col-12 col-sm-9" *ngIf="weatherForecast">
             <h2>Pronóstico para días siguientes</h2>
             <div class="row">
-              <div class="col-2 mb-3" *ngFor="let item of weatherForecast.list">
+              <div class="col-6 col-md-2 mb-3" *ngFor="let item of weatherForecast.list">
                 {{item.dt_txt | date: 'dd/MM/yyyy HH:mm'}} <br/>
                 <h4>{{item.main.temp}} °C</h4>
               </div>
