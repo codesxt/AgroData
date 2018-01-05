@@ -74,15 +74,6 @@ export class DashboardComponent implements OnInit{
     // Cargar Datos
     console.log("Station updated.");
     this.getStationData();
-    this.openweatherService.getCurrentWeather("Armerillo")
-    .subscribe(
-      response => {
-        console.log(response);
-      },
-      error    => {
-
-      }
-    )
   }
 
   ngOnInit(){

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://heladas.utalca.cl/agrodata'
+  apiUrl: 'https://heladas.utalca.cl/agrodata'
 };
