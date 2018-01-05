@@ -1,0 +1,287 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-block">
+      <h4 class="card-title">Plataforma de Datos Agronómicos</h4>
+      <h6 class="card-subtitle mb-2 text-muted">Seleccione una estación para consultar los datos</h6>
+      <form>
+        <div class="form-row">
+          <div class="col-2">
+            <label for="regionselect">Seleccione Región:</label>
+            <select
+              class="form-control"
+              id="regionselect"
+              [(ngModel)]="selectedRegion"
+              name="selectedRegion"
+              (change)="onRegionUpdate()">
+              <option *ngFor="let region of regions" value="{{region.id}}">
+                {{ region.name }}
+              </option>
+            </select>
+          </div>
+          <div class="col-2">
+            <label for="cityselect">Seleccione Ciudad:</label>
+            <select
+              class="form-control"
+              id="cityselect"
+              [(ngModel)]="selectedCity"
+              name="selectedCity"
+              (change)="onCityUpdate()">
+              <option *ngFor="let city of cities" value="{{city.id}}">
+                {{ city.name }}
+              </option>
+            </select>
+          </div>
+          <div class="col-2">
+            <label for="stationselect">Seleccione Estación:</label>
+            <select
+              class="form-control"
+              id="stationselect"
+              [(ngModel)]="selectedStation"
+              name="selectedStation"
+              (change)="onStationUpdate()">
+              <option *ngFor="let station of stations" value="{{station.id}}">
+                {{ station.name }}
+              </option>
+              <option *ngIf="stations.length==0" value="null">
+                No hay estaciones
+              </option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-block">
+      <h4 class="card-title">Último registro</h4>
+      <span *ngIf="!selectedStation">
+        No hay estaciones disponibles en la ciudad seleccionada.
+      </span>
+      <span *ngIf="selectedStation && lastMeasurements">
+        <table class="table table-responsive">
+          <thead>
+            <th>
+              Temperatura Promedio
+            </th>
+            <th>
+              Temperatura Mínima
+            </th>
+            <th>
+              Temperatura Máxima
+            </th>
+            <th>
+              Humedad Relativa Promedio (%)
+            </th>
+            <th>
+              Presión Atmosférica (mbar)
+            </th>
+            <th>
+              Radiación Solar (W/m²)
+            </th>
+            <th>
+              Velocidad máxima del viento (m/s)
+            </th>
+            <th>
+              Dirección del Viento
+            </th>
+            <th class="bg-success">
+              Grados día
+            </th>
+            <th class="bg-success">
+              GDH
+            </th>
+            <th class="bg-success">
+              Horas de Frío
+            </th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                {{lastMeasurements.averageTemperature}}°C
+              </td>
+              <td>
+                {{lastMeasurements.minimumTemperature}}°C
+              </td>
+              <td>
+                {{lastMeasurements.maximumTemperature}}°C
+              </td>
+              <td>
+                {{lastMeasurements.averageHumidity}} %
+              </td>
+              <td>
+                {{lastMeasurements.atmosphericPressure | number : '1.2-2'}} %
+              </td>
+              <td>
+                {{lastMeasurements.solarRadiation}}
+              </td>
+              <td>
+                {{lastMeasurements.windSpeed | number : '1.2-2'}} (m/s)
+              </td>
+              <td>
+                {{lastMeasurements.windDirection}}
+              </td>
+              <td>
+                {{lastMeasurements.gd}}
+              </td>
+              <td>
+                {{lastMeasurements.gdh}}
+              </td>
+              <td>
+                {{lastMeasurements.coldHours}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-block">
+      <h4 class="card-title">Pronósticos del Clima</h4>
+      <span *ngIf="currentWeather">
+        <div class="row">
+          <div class="col-3">
+            <table>
+              <thead>
+                <th colspan="4">
+                  <h2>Temperatura Actual</h2>
+                </th>
+              </thead>
+              <tbody>
+                <tr>
+                  <h3>{{currentWeather.name}}</h3>
+                </tr>
+                <tr>
+                  <td>
+                    <h2>{{currentWeather.main.temp}}°C</h2>
+                  </td>
+                  <td>
+                    <img src="http://openweathermap.org/img/w/{{currentWeather.weather[0].icon}}.png"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Presión Atmosférica
+                  </td>
+                  <td>
+                    : {{currentWeather.main.pressure}} hPa
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Humedad Relativa
+                  </td>
+                  <td>
+                    : {{currentWeather.main.humidity}} %
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Velocidad del Viento
+                  </td>
+                  <td>
+                    : {{currentWeather.wind.speed}} (m/s)
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-9" *ngIf="weatherForecast">
+            <h2>Pronóstico para días siguientes</h2>
+            <div class="row">
+              <div class="col-2 mb-3" *ngFor="let item of weatherForecast.list">
+                {{item.dt_txt | date: 'dd/MM/yyyy HH:mm'}} <br/>
+                <h4>{{item.main.temp}} °C</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </span>
+      <span *ngIf="!currentWeather">
+        Consultando pronósticos del clima...
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-block">
+      <h4 class="card-title">Datos de la estación</h4>
+      <span *ngIf="!selectedStation">
+        No hay estaciones disponibles en la ciudad seleccionada.
+      </span>
+      <span *ngIf="selectedStation">
+        <table class="table table-responsive">
+          <thead>
+            <th>
+              ID
+            </th>
+            <th>
+              Temperatura Promedio
+            </th>
+            <th>
+              Temperatura Mínima
+            </th>
+            <th>
+              Temperatura Máxima
+            </th>
+            <th>
+              Humedad Relativa Promedio (%)
+            </th>
+            <th>
+              Presión Atmosférica (mbar)
+            </th>
+            <th>
+              Radiación Solar (W/m²)
+            </th>
+            <th>
+              Velocidad máxima del viento (m/s)
+            </th>
+            <th>
+              Dirección del Viento
+            </th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of stationData; let index = index">
+              <td>
+                {{index+1}}
+              </td>
+              <td>
+                {{item.averageTemperature}}°C
+              </td>
+              <td>
+                {{item.minimumTemperature}}°C
+              </td>
+              <td>
+                {{item.maximumTemperature}}°C
+              </td>
+              <td>
+                {{item.averageHumidity}} %
+              </td>
+              <td>
+                {{item.atmosphericPressure | number : '1.2-2'}} %
+              </td>
+              <td>
+                {{item.solarRadiation}}
+              </td>
+              <td>
+                {{item.windSpeed | number : '1.2-2'}} (m/s)
+              </td>
+              <td>
+                {{item.windDirection}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </span>
+    </div>
+  </div>
+</div>
