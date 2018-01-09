@@ -21,9 +21,11 @@ export class StationSelectComponent implements OnInit{
 
   ngOnInit(){
     let userPreferences  = this.userSettingsService.getUserPreferences();
-    this.selectedRegion  = userPreferences.region;
-    this.selectedCity    = userPreferences.city;
-    this.selectedStation = userPreferences.station;
+    if(userPreferences){
+      this.selectedRegion  = userPreferences.region;
+      this.selectedCity    = userPreferences.city;
+      this.selectedStation = userPreferences.station;
+    }
     this.agrometService.getRegions().subscribe(
       (response) => {
         this.regions = response.regions;

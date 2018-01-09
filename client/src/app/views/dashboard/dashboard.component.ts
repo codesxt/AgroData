@@ -99,9 +99,11 @@ export class DashboardComponent implements OnInit{
 
   ngOnInit(){
     let userPreferences  = this.userSettingsService.getUserPreferences();
-    this.selectedRegion  = userPreferences.region;
-    this.selectedCity    = userPreferences.city;
-    this.selectedStation = userPreferences.station;
+    if(userPreferences){
+      this.selectedRegion  = userPreferences.region;
+      this.selectedCity    = userPreferences.city;
+      this.selectedStation = userPreferences.station;
+    }
 
     this.fromDate = this.calendar.getToday();
     this.fromDate.day -= 1;
