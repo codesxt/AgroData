@@ -171,6 +171,12 @@
             <th>
               Dirección del Viento
             </th>
+            <th>
+              Grados Día
+            </th>
+            <th>
+              Horas de Frío
+            </th>
           </thead>
           <tbody>
             <tr *ngFor="let item of stationData; let index = index">
@@ -200,6 +206,12 @@
               </td>
               <td>
                 {{item.windDirection}}
+              </td>
+              <td>
+                {{item.degreeDay}}
+              </td>
+              <td>
+                {{item.coldHours}}
               </td>
             </tr>
           </tbody>
