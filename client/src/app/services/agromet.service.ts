@@ -52,4 +52,22 @@ export class AgrometService {
       (response: Response) => response.json()
     );
   }
+
+  getHistory(stationID: number, fromDate: string, toDate?: string): any{
+    let headers = new Headers({  });
+    headers.append('Content-Type', 'application/json');
+    let params = new URLSearchParams();
+    params.append('from', fromDate);
+    if(toDate){
+      params.append('to', toDate);
+    }
+    let options = new RequestOptions({
+      headers : headers,
+      params  : params
+    });
+    let url = this.baseURL+'/api/v1/agromet/history/'+stationID;
+    return this.http.get(url, options).map(
+      (response: Response) => response.json()
+    );
+  }
 }

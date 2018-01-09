@@ -3,7 +3,7 @@ const request = require('request');
 const parseString = require('xml2js').parseString;
 const moment = require('moment');
 
-module.exports.getEmaHistory = (req, res) => {
+module.exports.getHistory = (req, res) => {
   let emaId = req.params.emaId;
   if(moment(req.query.from).isValid()){
     let from  = moment(req.query.from);

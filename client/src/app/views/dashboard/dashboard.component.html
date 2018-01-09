@@ -47,95 +47,18 @@
               </option>
             </select>
           </div>
+          <div class="col-12 col-sm-2">
+            <span *ngIf="fromDate">
+              Desde: {{ fromDate.day }} / {{ fromDate.month }} / {{ fromDate.year }}
+            </span>
+            <span *ngIf="toDate">
+              <br/>
+              Hasta: {{ toDate.day }} / {{ toDate.month }} / {{ toDate.year }}
+            </span>
+            <button class="btn btn-lg btn-primary" (click)="open(modal_content)"><i class="fa fa-calendar"></i> Seleccionar Fechas</button>
+          </div>
         </div>
       </form>
-    </div>
-  </div>
-</div>
-
-<div class="animated fadeIn">
-  <div class="card">
-    <div class="card-block">
-      <h4 class="card-title">Último registro</h4>
-      <span *ngIf="!selectedStation">
-        No hay estaciones disponibles en la ciudad seleccionada.
-      </span>
-      <span *ngIf="selectedStation && lastMeasurements">
-        <table class="table table-responsive">
-          <thead>
-            <th>
-              Temperatura Promedio
-            </th>
-            <th>
-              Temperatura Mínima
-            </th>
-            <th>
-              Temperatura Máxima
-            </th>
-            <th>
-              Humedad Relativa Promedio (%)
-            </th>
-            <th>
-              Presión Atmosférica (mbar)
-            </th>
-            <th>
-              Radiación Solar (W/m²)
-            </th>
-            <th>
-              Velocidad máxima del viento (m/s)
-            </th>
-            <th>
-              Dirección del Viento
-            </th>
-            <th class="bg-success">
-              Grados día
-            </th>
-            <th class="bg-success">
-              GDH
-            </th>
-            <th class="bg-success">
-              Horas de Frío
-            </th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                {{lastMeasurements.averageTemperature}}°C
-              </td>
-              <td>
-                {{lastMeasurements.minimumTemperature}}°C
-              </td>
-              <td>
-                {{lastMeasurements.maximumTemperature}}°C
-              </td>
-              <td>
-                {{lastMeasurements.averageHumidity}} %
-              </td>
-              <td>
-                {{lastMeasurements.atmosphericPressure | number : '1.2-2'}} %
-              </td>
-              <td>
-                {{lastMeasurements.solarRadiation}}
-              </td>
-              <td>
-                {{lastMeasurements.windSpeed | number : '1.2-2'}} (m/s)
-              </td>
-              <td>
-                {{lastMeasurements.windDirection}}
-              </td>
-              <td>
-                {{lastMeasurements.gd}}
-              </td>
-              <td>
-                {{lastMeasurements.gdh}}
-              </td>
-              <td>
-                {{lastMeasurements.coldHours}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </span>
     </div>
   </div>
 </div>
@@ -219,10 +142,10 @@
         No hay estaciones disponibles en la ciudad seleccionada.
       </span>
       <span *ngIf="selectedStation">
-        <table class="table table-responsive">
+        <table class="table table-responsive table-sm">
           <thead>
             <th>
-              ID
+              Fecha
             </th>
             <th>
               Temperatura Promedio
@@ -252,7 +175,7 @@
           <tbody>
             <tr *ngFor="let item of stationData; let index = index">
               <td>
-                {{index+1}}
+                {{item.date | date: 'dd/MM/yyyy HH:mm' : 'UTC'}}
               </td>
               <td>
                 {{item.averageTemperature}}°C
@@ -285,3 +208,39 @@
     </div>
   </div>
 </div>
+
+<ng-template #modal_content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Seleccione las fechas a consultar</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ngb-datepicker
+      #dp
+      ngModel
+      (ngModelChange)="onDateChange($event)"
+      [displayMonths]="2"
+      [dayTemplate]="t"
+      name="dates">
+    </ngb-datepicker>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+  </div>
+</ng-template>
+
+<ng-template
+  #t
+  let-date="date"
+  let-focused="focused">
+  <span class="custom-day"
+      [class.focused]="focused"
+      [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
+      [class.faded]="isHovered(date) || isInside(date)"
+      (mouseenter)="hoveredDate = date"
+      (mouseleave)="hoveredDate = null">
+    {{ date.day }}
+  </span>
+</ng-template>

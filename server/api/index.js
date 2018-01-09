@@ -8,7 +8,7 @@ router.use('/', ctrlDocumentation);
 
 router.get(
   '/agromet/history/:emaId',
-  ctrlAgromet.getEmaHistory
+  ctrlAgromet.getHistory
 );
 router.get(
   '/agromet/variables',

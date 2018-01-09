@@ -2,6 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AgrometService } from '../../services/agromet.service';
 import { OpenweatherService } from '../../services/openweather.service';
+import { NgbDateStruct, NgbCalendar , NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import * as zpad from 'zpad';
+
+const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
+  one && two && two.year === one.year && two.month === one.month && two.day === one.day;
+
+const before = (one: NgbDateStruct, two: NgbDateStruct) =>
+  !one || !two ? false : one.year === two.year ? one.month === two.month ? one.day === two.day
+    ? false : one.day < two.day : one.month < two.month : one.year < two.year;
+
+const after = (one: NgbDateStruct, two: NgbDateStruct) =>
+  !one || !two ? false : one.year === two.year ? one.month === two.month ? one.day === two.day
+    ? false : one.day > two.day : one.month > two.month : one.year > two.year;
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -14,13 +27,19 @@ export class DashboardComponent implements OnInit{
   selectedCity    : number = 1;
   selectedStation : number = 1;
   stationData     : any    = [];
-  lastMeasurements: any    = null;
   currentWeather  : any    = null;
   weatherForecast : any    = null;
+
+  hoveredDate : NgbDateStruct;
+  fromDate    : NgbDateStruct;
+  toDate      : NgbDateStruct;
   constructor(
-    private agrometService : AgrometService,
-    private openweatherService : OpenweatherService
-  ) { }
+    private agrometService     : AgrometService,
+    private openweatherService : OpenweatherService,
+    private calendar           : NgbCalendar,
+    private modalService       : NgbModal
+  ) {
+  }
 
   onRegionUpdate(){
     this.agrometService.getCities(this.selectedRegion)
@@ -77,6 +96,9 @@ export class DashboardComponent implements OnInit{
   }
 
   ngOnInit(){
+    this.fromDate = this.calendar.getToday();
+    this.fromDate.day -= 1;
+    this.toDate   = this.calendar.getNext(this.calendar.getToday(), 'd', 1);
     this.agrometService.getRegions()
     .subscribe(
       (response) => {
@@ -116,26 +138,74 @@ export class DashboardComponent implements OnInit{
   }
 
   getStationData(){
-    let N_DATA = 31;
-    let WIND_DIRECTIONS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-    this.stationData = [];
-    this.lastMeasurements = null;
-    for(let i = 0; i<N_DATA; i++){
-      let row: any = {};
-      row.averageTemperature  = Math.round((Math.random() * 10) + 20);
-      row.minimumTemperature  =  row.averageTemperature - 2;
-      row.maximumTemperature  = row.averageTemperature + 2;
-      row.averageHumidity     = Math.round(Math.random() * 100);
-      row.atmosphericPressure = Math.random()*50 + 1000;
-      row.solarRadiation      = Math.round(Math.random() * 1500);
-      row.windSpeed           = Math.random()*2 + 1;
-      row.windDirection       = WIND_DIRECTIONS[Math.floor(Math.random()*WIND_DIRECTIONS.length)]
-      this.stationData.push(row);
+    let station = this.stations.filter((item) => {
+      return item.id == this.selectedStation
+    })[0];
+    let from = "";
+    let to   = "";
+    if(this.fromDate){
+      from += this.fromDate.year+"-";
+      from += zpad(this.fromDate.month, 2)+"-";
+      from += zpad(this.fromDate.day, 2);
     }
-    this.lastMeasurements = this.stationData[0];
-    this.lastMeasurements.gd  = Math.floor(Math.random()*25);
-    this.lastMeasurements.gdh = this.lastMeasurements.gd * 6;
-    this.lastMeasurements.coldHours = Math.floor(Math.random()*4);
+    if(this.toDate){
+      to += this.toDate.year+"-";
+      to += zpad(this.toDate.month, 2)+"-";
+      to += zpad(this.toDate.day, 2);
+    }
+    if(to != ""){
+      this.agrometService.getHistory(station.id, from, to)
+      .subscribe(
+        response => {
+          this.stationData = [];
+          response.data.forEach((item) => {
+            this.stationData.push({
+              date                : item.date,
+              averageTemperature  : item.airTemperatureAvg,
+              minimumTemperature  : item.temperatureMin,
+              maximumTemperature  : item.temperatureMax,
+              hourlyRainfall      : item.hourlyRainfall,
+              averageHumidity     : item.relativeHumidityAvg,
+              atmosphericPressure : item.atmosphericPressure,
+              solarRadiation      : item.solarRadiationMax,
+              windSpeed           : item.windSpeedMax,
+              windDirection       : item.windDirection,
+              degreeDay           : item.degreeDay,
+              coldHours           : item.coldHours
+            })
+          })
+        },
+        error    => {
+
+        }
+      )
+    }else{
+      this.agrometService.getHistory(station.id, from)
+      .subscribe(
+        response => {
+          this.stationData = [];
+          response.data.forEach((item) => {
+            this.stationData.push({
+              date                : item.date,
+              averageTemperature  : item.airTemperatureAvg,
+              minimumTemperature  : item.temperatureMin,
+              maximumTemperature  : item.temperatureMax,
+              hourlyRainfall      : item.hourlyRainfall,
+              averageHumidity     : item.relativeHumidityAvg,
+              atmosphericPressure : item.atmosphericPressure,
+              solarRadiation      : item.solarRadiationMax,
+              windSpeed           : item.windSpeedMax,
+              windDirection       : item.windDirection,
+              degreeDay           : item.degreeDay,
+              coldHours           : item.coldHours
+            })
+          })
+        },
+        error    => {
+
+        }
+      )
+    }
   }
 
   getCurrentWeather(){
@@ -167,4 +237,32 @@ export class DashboardComponent implements OnInit{
       }
     )
   }
+
+  open(content) {
+    this.modalService.open(content).result.then(
+      (result) => {
+
+      },
+      (reason) => {
+
+      }
+    );
+  }
+
+  onDateChange(date: NgbDateStruct) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && after(date, this.fromDate)) {
+      this.toDate = date;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+    this.getStationData();
+  }
+
+  isHovered = date => this.fromDate && !this.toDate && this.hoveredDate && after(date, this.fromDate) && before(date, this.hoveredDate);
+  isInside  = date => after(date, this.fromDate) && before(date, this.toDate);
+  isFrom    = date => equals(date, this.fromDate);
+  isTo      = date => equals(date, this.toDate);
 }

@@ -66,6 +66,9 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 // Import custom services
 import { AgrometService } from './services/agromet.service';
@@ -81,7 +84,8 @@ import { OpenweatherService } from './services/openweather.service';
     ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    NgbModule.forRoot()
   ],
   declarations: [
     AppComponent,
