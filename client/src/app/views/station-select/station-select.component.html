@@ -1,0 +1,65 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-block">
+      <h4 class="card-title">Selección de Estación Favorita</h4>
+      <h6 class="card-subtitle mb-2 text-muted">Seleccione la estación más relevante para usted</h6>
+      <div class="text-center" *ngIf="!stationsLoaded">
+        <i class="fa fa-spinner fa-spin fa-5x fa-fw"></i><br/>
+        Cargando datos de estaciones...
+      </div>
+      <form *ngIf="stationsLoaded">
+        <div class="form-row">
+          <div class="col-12 col-sm-2">
+            <label for="regionselect">Seleccione Región:</label>
+            <select
+              class="form-control"
+              id="regionselect"
+              [(ngModel)]="selectedRegion"
+              name="selectedRegion"
+              (change)="onRegionUpdate()">
+              <option *ngFor="let region of regions" value="{{region.id}}">
+                {{ region.name }}
+              </option>
+            </select>
+          </div>
+          <div class="col-12 col-sm-2">
+            <label for="cityselect">Seleccione Ciudad:</label>
+            <select
+              class="form-control"
+              id="cityselect"
+              [(ngModel)]="selectedCity"
+              name="selectedCity"
+              (change)="onCityUpdate()">
+              <option *ngFor="let city of cities" value="{{city.id}}">
+                {{ city.name }}
+              </option>
+            </select>
+          </div>
+          <div class="col-12 col-sm-2">
+            <label for="stationselect">Seleccione Estación:</label>
+            <select
+              class="form-control"
+              id="stationselect"
+              [(ngModel)]="selectedStation"
+              name="selectedStation"
+              (change)="onStationUpdate()">
+              <option *ngFor="let station of stations" value="{{station.id}}">
+                {{ station.name }}
+              </option>
+              <option *ngIf="stations.length==0" value="null">
+                No hay estaciones
+              </option>
+            </select>
+          </div>
+          <div class="col-12 col-sm-2">
+            <label for="stationselect">Click para actualizar:</label>
+            <button class="btn btn-primary" (click)="saveData()">
+              <i class="fa fa-save"></i>
+              Guardar Estación
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

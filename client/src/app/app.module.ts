@@ -73,6 +73,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Import custom services
 import { AgrometService } from './services/agromet.service';
 import { OpenweatherService } from './services/openweather.service';
+import { UserSettingsService } from './services/user-settings.service';
 
 @NgModule({
   imports: [
@@ -98,7 +99,8 @@ import { OpenweatherService } from './services/openweather.service';
     useClass: HashLocationStrategy
   },
     AgrometService,
-    OpenweatherService
+    OpenweatherService,
+    UserSettingsService
   ],
   bootstrap: [ AppComponent ]
 })

@@ -10,16 +10,24 @@ import {
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'indicators',
     pathMatch: 'full',
   },
   {
     path: '',
-    component: SimpleLayoutComponent,
+    component: FullLayoutComponent,
     data: {
       title: 'Inicio'
     },
     children: [
+      {
+        path: 'indicators',
+        loadChildren: './views/indicators/indicators.module#IndicatorsModule'
+      },
+      {
+        path: 'station-select',
+        loadChildren: './views/station-select/station-select.module#StationSelectModule'
+      },
       {
         path: 'dashboard',
         loadChildren: './views/dashboard/dashboard.module#DashboardModule'

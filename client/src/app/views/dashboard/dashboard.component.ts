@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AgrometService } from '../../services/agromet.service';
 import { OpenweatherService } from '../../services/openweather.service';
 import { NgbDateStruct, NgbCalendar , NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { UserSettingsService } from '../../services/user-settings.service';
 import * as zpad from 'zpad';
 
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
@@ -23,9 +24,9 @@ export class DashboardComponent implements OnInit{
   regions  : any = [];
   cities   : any = [];
   stations : any = [];
-  selectedRegion  : number = 1;
-  selectedCity    : number = 1;
-  selectedStation : number = 1;
+  selectedRegion  : number = null;
+  selectedCity    : number = null;
+  selectedStation : number = null;
   stationData     : any    = [];
   currentWeather  : any    = null;
   weatherForecast : any    = null;
@@ -37,7 +38,8 @@ export class DashboardComponent implements OnInit{
     private agrometService     : AgrometService,
     private openweatherService : OpenweatherService,
     private calendar           : NgbCalendar,
-    private modalService       : NgbModal
+    private modalService       : NgbModal,
+    private userSettingsService : UserSettingsService
   ) {
   }
 
@@ -96,6 +98,11 @@ export class DashboardComponent implements OnInit{
   }
 
   ngOnInit(){
+    let userPreferences  = this.userSettingsService.getUserPreferences();
+    this.selectedRegion  = userPreferences.region;
+    this.selectedCity    = userPreferences.city;
+    this.selectedStation = userPreferences.station;
+
     this.fromDate = this.calendar.getToday();
     this.fromDate.day -= 1;
     this.toDate   = this.calendar.getNext(this.calendar.getToday(), 'd', 1);
@@ -103,19 +110,25 @@ export class DashboardComponent implements OnInit{
     .subscribe(
       (response) => {
         this.regions = response.regions;
-        this.selectedRegion = this.regions[0].id;
+        if(!this.selectedRegion){
+          this.selectedRegion = this.regions[0].id;
+        }
         this.agrometService.getCities(this.selectedRegion)
         .subscribe(
           (response) => {
             this.cities = response.cities;
-            this.selectedCity = this.cities[0].id;
+            if(!this.selectedCity){
+              this.selectedCity = this.cities[0].id;
+            }
             this.getCurrentWeather();
             this.agrometService.getStations(this.selectedRegion, this.selectedCity)
             .subscribe(
               (response) => {
                 this.stations = response.stations;
                 if(this.stations.length>0){
-                  this.selectedStation = this.stations[0].id;
+                  if(!this.selectedStation){
+                    this.selectedStation = this.stations[0].id;
+                  }
                 }else{
                   this.selectedStation = null;
                 }
