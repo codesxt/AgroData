@@ -24,6 +24,11 @@ export const routes: Routes = [
         path: 'indicators',
         loadChildren: './views/indicators/indicators.module#IndicatorsModule'
       },
+
+      {
+        path: 'indicators-select',
+        loadChildren: './views/indicators-select/indicators-select.module#IndicatorsSelectModule'
+      },
       {
         path: 'station-select',
         loadChildren: './views/station-select/station-select.module#StationSelectModule'

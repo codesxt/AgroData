@@ -35,7 +35,7 @@ module.exports.getHistory = (req, res) => {
             return;
           }else{
             parseString(body, function (err, result) {
-              if(err){
+              if(err || !result){
                 console.log(err);
                 console.log("Error parsing body:");
                 console.log(body);
