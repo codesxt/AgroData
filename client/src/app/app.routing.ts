@@ -10,7 +10,7 @@ import {
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'indicators',
+    redirectTo: 'station-select',
     pathMatch: 'full',
   },
   {
