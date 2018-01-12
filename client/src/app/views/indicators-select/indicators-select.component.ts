@@ -18,6 +18,9 @@ const after = (one: NgbDateStruct, two: NgbDateStruct) =>
   templateUrl: 'indicators-select.component.html'
 })
 export class IndicatorsSelectComponent implements OnInit{
+  hoveredDate : NgbDateStruct;
+  fromDate    : NgbDateStruct;
+  toDate      : NgbDateStruct;
   constructor(
     private calendar           : NgbCalendar,
     private modalService       : NgbModal
