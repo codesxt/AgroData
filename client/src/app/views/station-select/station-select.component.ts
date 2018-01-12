@@ -31,6 +31,8 @@ export class StationSelectComponent implements OnInit{
         this.regions = response.regions;
         if(!this.selectedRegion){
           this.selectedRegion = this.regions[0].id;
+          // Forzar región del Maule
+          this.selectedRegion = 9;
         }
         this.agrometService.getCities(this.selectedRegion).subscribe(
           (response) => {

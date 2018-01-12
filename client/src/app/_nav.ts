@@ -1,8 +1,8 @@
 export const navigation = [
   {
-    name: 'Indicadores',
-    url: '/indicators',
-    icon: 'icon-speedometer'
+    name: 'Selección de Estación',
+    url: '/station-select',
+    icon: 'icon-list'
   },
   {
     name: 'Selección de Indicadores',
@@ -10,13 +10,16 @@ export const navigation = [
     icon: 'icon-list'
   },
   {
-    name: 'Selección de Estación',
-    url: '/station-select',
-    icon: 'icon-list'
-  },
-  {
-    name: 'Detalle de datos',
-    url: '/dashboard',
+    name: 'Indicadores',
+    url: '/indicators',
     icon: 'icon-speedometer'
   }
 ];
+
+/*
+{
+  name: 'Selección de Estación',
+  url: '/station-select',
+  icon: 'icon-list'
+},
+*/
