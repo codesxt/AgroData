@@ -36,6 +36,10 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: './views/dashboard/dashboard.module#DashboardModule'
+      },
+      {
+        path: 'odb',
+        loadChildren: './views/odb/odb.module#OdbModule'
       }
     ]
   }

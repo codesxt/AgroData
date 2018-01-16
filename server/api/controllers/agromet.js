@@ -114,7 +114,14 @@ module.exports.getVariables = (req, res) => {
         });
         return;
       }else{
-        body = JSON.parse(body);
+        try {
+          body = JSON.parse(body);
+        } catch (e) {
+          utils.sendJSONresponse(res, 404, {
+            message: "Variables not found."
+          });
+          return;
+        }
         let variables = [];
         for(let v of body){
           variables.push({
@@ -140,7 +147,14 @@ module.exports.getRegions = (req, res) => {
         });
         return;
       }else{
-        body = JSON.parse(body);
+        try {
+          body = JSON.parse(body);
+        } catch (e) {
+          utils.sendJSONresponse(res, 404, {
+            message: "Variables not found."
+          });
+          return;
+        }
         let regions = [];
         for(let v of body){
           regions.push({
@@ -173,7 +187,14 @@ module.exports.getCities = (req, res) => {
         });
         return;
       }else{
-        body = JSON.parse(body);
+        try {
+          body = JSON.parse(body);
+        } catch (e) {
+          utils.sendJSONresponse(res, 404, {
+            message: "Variables not found."
+          });
+          return;
+        }
         let cities = [];
         for(let v of body){
           cities.push({
@@ -212,7 +233,14 @@ module.exports.getFilteredEMAs = (req, res) => {
         });
         return;
       }else{
-        body = JSON.parse(body);
+        try {
+          body = JSON.parse(body);
+        } catch (e) {
+          utils.sendJSONresponse(res, 404, {
+            message: "Variables not found."
+          });
+          return;
+        }
         let emas = [];
         for(let v of body){
           emas.push({

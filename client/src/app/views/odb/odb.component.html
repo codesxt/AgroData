@@ -1,0 +1,55 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-block">
+      <h4 class="card-title">Estimación de Incidencias de Ojo de Buey</h4>
+      <h6 class="card-subtitle mb-2 text-muted">Seleccione su sector para estimar las incidencias de Ojo de Buey</h6>
+      <div class="col-md-4">
+        <label for="stationselect">Sector:</label>
+        <select
+          class="form-control"
+          id="stationselect"
+          [(ngModel)]="selectedStation"
+          name="selectedStation"
+          (change)="null">
+          <option *ngFor="let item of sectors" value="{{item}}">
+            {{ item }}
+          </option>
+          <option *ngIf="sectors.length==0" value="null">
+            No hay estaciones
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="card">
+        <div class="card-header text-center">Porcentaje de Incidencia</div>
+        <div class="card-body">
+          <h3 class="card-title text-center">80 %</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <div class="card">
+        <div class="card-header text-center">Tiempo de Ocurrencia</div>
+        <div class="card-body">
+          <h3 class="card-title text-center">26 de Mayo de 2018</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-12">
+      <div class="card">
+        <div class="card-header text-center">Curva de Incidencia</div>
+        <div class="card-body">
+          <img src="assets/img/curva.png" class="rounded mx-auto d-block" style="height:150px;width:450px;">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

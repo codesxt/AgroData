@@ -74,6 +74,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgrometService } from './services/agromet.service';
 import { OpenweatherService } from './services/openweather.service';
 import { UserSettingsService } from './services/user-settings.service';
+import { IndicatorsService } from './services/indicators.service';
 
 @NgModule({
   imports: [
@@ -100,7 +101,8 @@ import { UserSettingsService } from './services/user-settings.service';
   },
     AgrometService,
     OpenweatherService,
-    UserSettingsService
+    UserSettingsService,
+    IndicatorsService
   ],
   bootstrap: [ AppComponent ]
 })

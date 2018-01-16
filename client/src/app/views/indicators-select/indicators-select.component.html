@@ -12,84 +12,38 @@
     <div class="card-block">
       <h4 class="card-title">Temperatura</h4>
 
-      <div class="form-check">
+      <!--<pre>{{temperatureIndicators | json}}</pre>-->
+
+      <div class="form-check" *ngFor="let ind of temperatureIndicators">
         <label class="switch switch-default switch-pill switch-primary">
-          <input type="checkbox" class="switch-input" checked>
+          <input
+            name='checkbox'
+            type="checkbox"
+            class="switch-input"
+            [(ngModel)]="ind.enabled"
+            (change)='toggleIndicator(ind)'>
           <span class="switch-label"></span>
           <span class="switch-handle"></span>
         </label>
         <label class="form-check-label">
-          Días con Temperatura > 25°C
+          {{ind.name}}
         </label>
-        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content)">
+        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
           Fechas
         </button>
       </div>
-
-      <div class="form-check">
-        <label class="switch switch-default switch-pill switch-primary">
-          <input type="checkbox" class="switch-input" checked>
-          <span class="switch-label"></span>
-          <span class="switch-handle"></span>
-        </label>
-        <label class="form-check-label">
-          Días con Temperatura > 30°C
-        </label>
-        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content)">
-          <i class="fa fa-calendar"></i>
-          Fechas
-        </button>
-      </div>
-
-      <div class="form-check">
-        <label class="switch switch-default switch-pill switch-primary">
-          <input type="checkbox" class="switch-input" checked>
-          <span class="switch-label"></span>
-          <span class="switch-handle"></span>
-        </label>
-        <label class="form-check-label">
-          Días con Temperatura > 34°C
-        </label>
-        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content)">
-          <i class="fa fa-calendar"></i>
-          Fechas
-        </button>
-      </div>
-
-      <div class="form-check">
-        <label class="switch switch-default switch-pill switch-primary">
-          <input type="checkbox" class="switch-input" checked>
-          <span class="switch-label"></span>
-          <span class="switch-handle"></span>
-        </label>
-        <label class="form-check-label">
-          Suma mensual de grados día
-        </label>
-        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content)">
-          <i class="fa fa-calendar"></i>
-          Fechas
-        </button>
-      </div>
-
-      <div class="form-check">
-        <label class="switch switch-default switch-pill switch-primary">
-          <input type="checkbox" class="switch-input" checked>
-          <span class="switch-label"></span>
-          <span class="switch-handle"></span>
-        </label>
-        <label class="form-check-label">
-          Cantidad de horas de frío
-        </label>
-        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content)">
-          <i class="fa fa-calendar"></i>
-          Fechas
+      <div *ngIf="!areTemperaturesEqual()">
+        <button class="btn btn-sm btn-warning" (click)="saveChangesTemperature()">
+          <i class="fa fa-save"></i>
+          Guardar Cambios
         </button>
       </div>
     </div>
   </div>
 </div>
 
+<!--
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-block">
@@ -213,6 +167,7 @@
     </div>
   </div>
 </div>
+-->
 
 <ng-template #modal_content let-c="close" let-d="dismiss">
   <div class="modal-header">
