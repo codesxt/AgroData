@@ -35,6 +35,22 @@ module.exports.getIndicators = (req, res) => {
       {
         name        : 'daysTempGT25Deg',
         description : 'Días con temperatura mayor a 25° C.'
+      },
+      {
+        name        : 'daysTempGT30Deg',
+        description : 'Días con temperatura mayor a 30° C.'
+      },
+      {
+        name        : 'daysTempGT34Deg',
+        description : 'Días con temperatura mayor a 34° C.'
+      },
+      {
+        name        : 'degreeDays',
+        description : 'Grados día (base 10).'
+      },
+      {
+        name        : 'coldHours',
+        description : 'Horas con temperatura menor a 7° C.'
       }
     ]
   });
@@ -54,6 +70,7 @@ module.exports.daysTempGT25Deg = (req, res) => {
     });
     return;
   }else{
+    req.query.to = moment(req.query.to).add(1, 'day').format('YYYY-MM-DD');
     request.get(BASE_URL+'/api/v1/agromet/history/'+req.params.stationId+'?from='+req.query.from+'&to='+req.query.to,
       (error, response, body) => {
         if(error){
@@ -103,6 +120,7 @@ module.exports.daysTempGT30Deg = (req, res) => {
     });
     return;
   }else{
+    req.query.to = moment(req.query.to).add(1, 'day').format('YYYY-MM-DD');
     request.get(BASE_URL+'/api/v1/agromet/history/'+req.params.stationId+'?from='+req.query.from+'&to='+req.query.to,
       (error, response, body) => {
         if(error){
@@ -152,6 +170,7 @@ module.exports.daysTempGT34Deg = (req, res) => {
     });
     return;
   }else{
+    req.query.to = moment(req.query.to).add(1, 'day').format('YYYY-MM-DD');
     request.get(BASE_URL+'/api/v1/agromet/history/'+req.params.stationId+'?from='+req.query.from+'&to='+req.query.to,
       (error, response, body) => {
         if(error){
@@ -201,6 +220,7 @@ module.exports.degreeDays = (req, res) => {
     });
     return;
   }else{
+    req.query.to = moment(req.query.to).add(1, 'day').format('YYYY-MM-DD');
     request.get(BASE_URL+'/api/v1/agromet/history/'+req.params.stationId+'?from='+req.query.from+'&to='+req.query.to,
       (error, response, body) => {
         if(error){
@@ -248,6 +268,7 @@ module.exports.coldHours = (req, res) => {
     });
     return;
   }else{
+    req.query.to = moment(req.query.to).add(1, 'day').format('YYYY-MM-DD');
     request.get(BASE_URL+'/api/v1/agromet/history/'+req.params.stationId+'?from='+req.query.from+'&to='+req.query.to,
       (error, response, body) => {
         if(error){
@@ -264,7 +285,6 @@ module.exports.coldHours = (req, res) => {
             item.data.forEach((item) => {
               if(item.temperatureMin <= 7){
                 coldHours += 0.25;
-                console.log(item.date);
               }
             })
           })
