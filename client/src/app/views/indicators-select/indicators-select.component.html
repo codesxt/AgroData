@@ -43,6 +43,42 @@
   </div>
 </div>
 
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-block">
+      <h4 class="card-title">Precipitaciones</h4>
+
+      <!--<pre>{{temperatureIndicators | json}}</pre>-->
+
+      <div class="form-check" *ngFor="let ind of rainIndicators">
+        <label class="switch switch-default switch-pill switch-primary">
+          <input
+            name='checkbox'
+            type="checkbox"
+            class="switch-input"
+            [(ngModel)]="ind.enabled"
+            (change)='toggleIndicator(ind)'>
+          <span class="switch-label"></span>
+          <span class="switch-handle"></span>
+        </label>
+        <label class="form-check-label">
+          {{ind.name}}
+        </label>
+        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
+          <i class="fa fa-calendar"></i>
+          Fechas
+        </button>
+      </div>
+      <div *ngIf="!areRainsEqual()">
+        <button class="btn btn-sm btn-warning" (click)="saveChangesRain()">
+          <i class="fa fa-save"></i>
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!--
 <div class="animated fadeIn">
   <div class="card">

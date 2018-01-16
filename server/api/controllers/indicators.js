@@ -299,3 +299,97 @@ module.exports.coldHours = (req, res) => {
     )
   }
 }
+
+module.exports.daysRainOver10mm = (req, res) => {
+  console.log(req.query);
+  console.log(req.params);
+  if(!(req.query.to && req.query.from)){
+    utils.sendJSONresponse(res, 400, {
+      error     : "Missing parameters."
+    });
+    return;
+  }else if (!moment(req.query.to).isValid() || !moment(req.query.from).isValid()) {
+    utils.sendJSONresponse(res, 400, {
+      error     : "Invalid dates."
+    });
+    return;
+  }else{
+    req.query.to = moment(req.query.to).add(1, 'day').format('YYYY-MM-DD');
+    request.get(BASE_URL+'/api/v1/agromet/history/'+req.params.stationId+'?from='+req.query.from+'&to='+req.query.to,
+      (error, response, body) => {
+        if(error){
+          console.log(error);
+          utils.sendJSONresponse(res, 404, {
+            message: "Data not found."
+          });
+          return;
+        }else{
+          let data = JSON.parse(body).data;
+          let groups = groupDataByDays(data);
+          let daysCount = 0;
+          groups.forEach((item) => {
+            let hasDay = false;
+            item.data.forEach((item) => {
+              if(+item.hourlyRainfall >= 10){
+                hasDay = true;
+              }
+            })
+            if(hasDay){
+              daysCount += 1;
+            }
+          })
+
+          utils.sendJSONresponse(res, 200, {
+            indicator : "daysRainOver10mm",
+            value     : daysCount
+          });
+          return;
+        }
+      }
+    )
+  }
+}
+
+module.exports.totalRain = (req, res) => {
+  console.log(req.query);
+  console.log(req.params);
+  if(!(req.query.to && req.query.from)){
+    utils.sendJSONresponse(res, 400, {
+      error     : "Missing parameters."
+    });
+    return;
+  }else if (!moment(req.query.to).isValid() || !moment(req.query.from).isValid()) {
+    utils.sendJSONresponse(res, 400, {
+      error     : "Invalid dates."
+    });
+    return;
+  }else{
+    req.query.to = moment(req.query.to).add(1, 'day').format('YYYY-MM-DD');
+    request.get(BASE_URL+'/api/v1/agromet/history/'+req.params.stationId+'?from='+req.query.from+'&to='+req.query.to,
+      (error, response, body) => {
+        if(error){
+          console.log(error);
+          utils.sendJSONresponse(res, 404, {
+            message: "Data not found."
+          });
+          return;
+        }else{
+          let data = JSON.parse(body).data;
+          let groups = groupDataByDays(data);
+          let totalRain = 0;
+          groups.forEach((item) => {
+            item.data.forEach((item) => {
+              totalRain += +item.hourlyRainfall;
+            })
+          })
+
+          utils.sendJSONresponse(res, 200, {
+            indicator : "totalRain",
+            value     : totalRain
+          });
+          return;
+        }
+      }
+    )
+  }
+}

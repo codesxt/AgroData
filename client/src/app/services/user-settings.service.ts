@@ -76,4 +76,34 @@ export class UserSettingsService {
   setTemperatureIndicators(indicators){
     localStorage.setItem('temp-indicators', JSON.stringify(indicators));
   }
+
+  getRainIndicators(){
+    let local = localStorage.getItem('rain-indicators');
+    if(local){
+      return JSON.parse(local);
+    }else{
+      let indicators = [
+        {
+          enabled   : false,
+          indicator : 'daysRainOver10mm',
+          name      : 'Días con lluvia > 10 mm',
+          from      : null,
+          to        : null
+        },
+        {
+          enabled   : false,
+          indicator : 'totalRain',
+          name      : 'Lluvia total del mes (mm)',
+          from      : null,
+          to        : null
+        }
+      ]
+      localStorage.setItem('rain-indicators', JSON.stringify(indicators));
+      return indicators;
+    }
+  }
+
+  setRainIndicators(indicators){
+    localStorage.setItem('rain-indicators', JSON.stringify(indicators));
+  }
 }

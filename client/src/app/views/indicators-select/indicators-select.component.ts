@@ -27,6 +27,9 @@ export class IndicatorsSelectComponent implements OnInit{
   selectedIndicator       : any = null;
   temperatureIndicators   : any = {};
   originalTemperatureIndicators : any = {};
+
+  rainIndicators          : any = {};
+  originalRainIndicators  : any = {};
   constructor(
     private calendar           : NgbCalendar,
     private modalService       : NgbModal,
@@ -37,6 +40,10 @@ export class IndicatorsSelectComponent implements OnInit{
     let indicators  = this.userSettingsService.getTemperatureIndicators();
     this.temperatureIndicators = indicators;
     this.originalTemperatureIndicators = JSON.parse(JSON.stringify(indicators));
+
+    indicators  = this.userSettingsService.getRainIndicators();
+    this.rainIndicators = indicators;
+    this.originalRainIndicators = JSON.parse(JSON.stringify(indicators));
   }
 
   open(content, indicator) {
@@ -68,9 +75,18 @@ export class IndicatorsSelectComponent implements OnInit{
     return JSON.stringify(this.temperatureIndicators) == JSON.stringify(this.originalTemperatureIndicators);
   }
 
+  areRainsEqual(){
+    return JSON.stringify(this.rainIndicators) == JSON.stringify(this.originalRainIndicators);
+  }
+
   saveChangesTemperature(){
     this.userSettingsService.setTemperatureIndicators(this.temperatureIndicators);
     this.originalTemperatureIndicators = JSON.parse(JSON.stringify(this.temperatureIndicators));
+  }
+
+  saveChangesRain(){
+    this.userSettingsService.setRainIndicators(this.rainIndicators);
+    this.originalRainIndicators = JSON.parse(JSON.stringify(this.rainIndicators));
   }
 
   onDateChange(date: NgbDateStruct) {

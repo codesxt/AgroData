@@ -58,4 +58,14 @@ router.get(
   ctrlIndicators.coldHours
 )
 
+router.get(
+  '/indicators/daysRainOver10mm/:stationId',
+  ctrlIndicators.daysRainOver10mm
+)
+
+router.get(
+  '/indicators/totalRain/:stationId',
+  ctrlIndicators.totalRain
+)
+
 module.exports = router;

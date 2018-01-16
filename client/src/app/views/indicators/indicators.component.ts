@@ -10,6 +10,7 @@ import * as zpad from 'zpad';
 })
 export class IndicatorsComponent implements OnInit{
   temperatureIndicators   : any = {};
+  rainIndicators          : any = {};
   userPreferences         : any = null;
   constructor(
     private userSettingsService : UserSettingsService,
@@ -25,6 +26,9 @@ export class IndicatorsComponent implements OnInit{
     }
     let stationId = this.userPreferences.station;
     this.temperatureIndicators = this.userSettingsService.getTemperatureIndicators().filter((item) => {
+      return item.enabled == true;
+    });
+    this.rainIndicators = this.userSettingsService.getRainIndicators().filter((item) => {
       return item.enabled == true;
     });
     this.temperatureIndicators.forEach((item) => {
@@ -97,6 +101,43 @@ export class IndicatorsComponent implements OnInit{
       }
       if(item.indicator == 'coldHours'){
         this.indicatorsService.getColdHours(
+          stationId,
+          item.from.year + "-" + zpad(item.from.month) + "-" + zpad(item.from.day),
+          item.to.year + "-" + zpad(item.to.month) + "-" + zpad(item.to.day)
+        )
+        .subscribe(
+          data   => {
+            item.value = data.value;
+          },
+          error  => {
+            console.log(error);
+            alert(error.json().error);
+          }
+        )
+      }
+    })
+    this.rainIndicators.forEach((item) => {
+      item.fromString = zpad(item.from.day) + "-" + zpad(item.from.month) + "-" + item.from.year;
+      item.toString = zpad(item.to.day) + "-" + zpad(item.to.month) + "-" + item.to.year;
+
+      if(item.indicator == 'totalRain'){
+        this.indicatorsService.getTotalRain(
+          stationId,
+          item.from.year + "-" + zpad(item.from.month) + "-" + zpad(item.from.day),
+          item.to.year + "-" + zpad(item.to.month) + "-" + zpad(item.to.day)
+        )
+        .subscribe(
+          data   => {
+            item.value = data.value;
+          },
+          error  => {
+            console.log(error);
+            alert(error.json().error);
+          }
+        )
+      }
+      if(item.indicator == 'daysRainOver10mm'){
+        this.indicatorsService.getDaysRainOver10mm(
           stationId,
           item.from.year + "-" + zpad(item.from.month) + "-" + zpad(item.from.day),
           item.to.year + "-" + zpad(item.to.month) + "-" + zpad(item.to.day)
