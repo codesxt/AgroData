@@ -26,7 +26,10 @@
           <span class="switch-handle"></span>
         </label>
         <label class="form-check-label">
-          {{ind.name}}
+          {{ind.name}}<br/>
+          <span class="text-muted" *ngIf="ind.from && ind.to">
+          ({{ind.from.year}}-{{ind.from.month}}-{{ind.from.day}} - {{ind.to.year}}-{{ind.to.month}}-{{ind.to.day}})
+          </span>
         </label>
         <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
@@ -62,7 +65,10 @@
           <span class="switch-handle"></span>
         </label>
         <label class="form-check-label">
-          {{ind.name}}
+          {{ind.name}}<br/>
+          <span class="text-muted" *ngIf="ind.from && ind.to">
+          ({{ind.from.year}}-{{ind.from.month}}-{{ind.from.day}} - {{ind.to.year}}-{{ind.to.month}}-{{ind.to.day}})
+          </span>
         </label>
         <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
@@ -98,7 +104,10 @@
           <span class="switch-handle"></span>
         </label>
         <label class="form-check-label">
-          {{ind.name}}
+          {{ind.name}}<br/>
+          <span class="text-muted" *ngIf="ind.from && ind.to">
+          ({{ind.from.year}}-{{ind.from.month}}-{{ind.from.day}} - {{ind.to.year}}-{{ind.to.month}}-{{ind.to.day}})
+          </span>
         </label>
         <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
@@ -134,7 +143,10 @@
           <span class="switch-handle"></span>
         </label>
         <label class="form-check-label">
-          {{ind.name}}
+          {{ind.name}}<br/>
+          <span class="text-muted" *ngIf="ind.from && ind.to">
+          ({{ind.from.year}}-{{ind.from.month}}-{{ind.from.day}} - {{ind.to.year}}-{{ind.to.month}}-{{ind.to.day}})
+          </span>
         </label>
         <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
@@ -170,7 +182,10 @@
           <span class="switch-handle"></span>
         </label>
         <label class="form-check-label">
-          {{ind.name}}
+          {{ind.name}}<br/>
+          <span class="text-muted" *ngIf="ind.from && ind.to">
+          ({{ind.from.year}}-{{ind.from.month}}-{{ind.from.day}} - {{ind.to.year}}-{{ind.to.month}}-{{ind.to.day}})
+          </span>
         </label>
         <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>

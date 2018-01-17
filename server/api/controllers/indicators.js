@@ -575,9 +575,10 @@ module.exports.accumulatedSolarRadiation = (req, res) => {
           let totalRadiation = 0;
           groups.forEach((item) => {
             item.data.forEach((item) => {
-              totalRadiation += +item.solarRadiationMax;
+              totalRadiation += (+item.solarRadiationMax *900);
             })
           })
+          totalRadiation = totalRadiation / 1000000;
 
           utils.sendJSONresponse(res, 200, {
             indicator : "accumulatedSolarRadiation",
