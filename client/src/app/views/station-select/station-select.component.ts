@@ -16,7 +16,8 @@ export class StationSelectComponent implements OnInit{
   stationsLoaded  : boolean = false;
   constructor(
     private agrometService      : AgrometService,
-    private userSettingsService : UserSettingsService
+    private userSettingsService : UserSettingsService,
+    private router              : Router
   ) { }
 
   ngOnInit(){
@@ -120,5 +121,6 @@ export class StationSelectComponent implements OnInit{
 
   saveData(){
     this.userSettingsService.setUserPreferences(this.selectedRegion, this.selectedCity, this.selectedStation);
+    this.router.navigate(['/indicators-select']);
   }
 }
