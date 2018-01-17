@@ -393,3 +393,199 @@ module.exports.totalRain = (req, res) => {
     )
   }
 }
+
+module.exports.daysWindOver5kmh = (req, res) => {
+  console.log(req.query);
+  console.log(req.params);
+  if(!(req.query.to && req.query.from)){
+    utils.sendJSONresponse(res, 400, {
+      error     : "Missing parameters."
+    });
+    return;
+  }else if (!moment(req.query.to).isValid() || !moment(req.query.from).isValid()) {
+    utils.sendJSONresponse(res, 400, {
+      error     : "Invalid dates."
+    });
+    return;
+  }else{
+    req.query.to = moment(req.query.to).add(1, 'day').format('YYYY-MM-DD');
+    request.get(BASE_URL+'/api/v1/agromet/history/'+req.params.stationId+'?from='+req.query.from+'&to='+req.query.to,
+      (error, response, body) => {
+        if(error){
+          console.log(error);
+          utils.sendJSONresponse(res, 404, {
+            message: "Data not found."
+          });
+          return;
+        }else{
+          let data = JSON.parse(body).data;
+          let groups = groupDataByDays(data);
+          let daysCount = 0;
+          groups.forEach((item) => {
+            let hasDay = false;
+            item.data.forEach((item) => {
+              if(+item.windSpeedMax >= 1.38889){
+                hasDay = true;
+              }
+            })
+            if(hasDay){
+              daysCount += 1;
+            }
+          })
+
+          utils.sendJSONresponse(res, 200, {
+            indicator : "daysWindOver5kmh",
+            value     : daysCount
+          });
+          return;
+        }
+      }
+    )
+  }
+}
+
+module.exports.daysWindOver10kmh = (req, res) => {
+  console.log(req.query);
+  console.log(req.params);
+  if(!(req.query.to && req.query.from)){
+    utils.sendJSONresponse(res, 400, {
+      error     : "Missing parameters."
+    });
+    return;
+  }else if (!moment(req.query.to).isValid() || !moment(req.query.from).isValid()) {
+    utils.sendJSONresponse(res, 400, {
+      error     : "Invalid dates."
+    });
+    return;
+  }else{
+    req.query.to = moment(req.query.to).add(1, 'day').format('YYYY-MM-DD');
+    request.get(BASE_URL+'/api/v1/agromet/history/'+req.params.stationId+'?from='+req.query.from+'&to='+req.query.to,
+      (error, response, body) => {
+        if(error){
+          console.log(error);
+          utils.sendJSONresponse(res, 404, {
+            message: "Data not found."
+          });
+          return;
+        }else{
+          let data = JSON.parse(body).data;
+          let groups = groupDataByDays(data);
+          let daysCount = 0;
+          groups.forEach((item) => {
+            let hasDay = false;
+            item.data.forEach((item) => {
+              if(+item.windSpeedMax >= 2.77778){
+                hasDay = true;
+              }
+            })
+            if(hasDay){
+              daysCount += 1;
+            }
+          })
+
+          utils.sendJSONresponse(res, 200, {
+            indicator : "daysWindOver10kmh",
+            value     : daysCount
+          });
+          return;
+        }
+      }
+    )
+  }
+}
+
+module.exports.averageRelativeHumidity = (req, res) => {
+  console.log(req.query);
+  console.log(req.params);
+  if(!(req.query.to && req.query.from)){
+    utils.sendJSONresponse(res, 400, {
+      error     : "Missing parameters."
+    });
+    return;
+  }else if (!moment(req.query.to).isValid() || !moment(req.query.from).isValid()) {
+    utils.sendJSONresponse(res, 400, {
+      error     : "Invalid dates."
+    });
+    return;
+  }else{
+    req.query.to = moment(req.query.to).add(1, 'day').format('YYYY-MM-DD');
+    request.get(BASE_URL+'/api/v1/agromet/history/'+req.params.stationId+'?from='+req.query.from+'&to='+req.query.to,
+      (error, response, body) => {
+        if(error){
+          console.log(error);
+          utils.sendJSONresponse(res, 404, {
+            message: "Data not found."
+          });
+          return;
+        }else{
+          let data = JSON.parse(body).data;
+          let groups = groupDataByDays(data);
+          let averageHumidity = 0;
+          let averageHumiditySum = 0;
+          groups.forEach((item) => {
+            let humiditySum = 0;
+            let rowsCount   = 0;
+            let dailyAverageHumidity = 0;
+            item.data.forEach((item) => {
+              humiditySum += +item.relativeHumidityAvg;
+              rowsCount      += 1;
+            })
+            dailyAverageHumidity = (humiditySum / rowsCount);
+            averageHumiditySum += dailyAverageHumidity;
+          })
+          averageHumidity = averageHumiditySum / groups.length;
+
+          utils.sendJSONresponse(res, 200, {
+            indicator : "averageRelativeHumidity",
+            value     : averageHumidity
+          });
+          return;
+        }
+      }
+    )
+  }
+}
+
+module.exports.accumulatedSolarRadiation = (req, res) => {
+  console.log(req.query);
+  console.log(req.params);
+  if(!(req.query.to && req.query.from)){
+    utils.sendJSONresponse(res, 400, {
+      error     : "Missing parameters."
+    });
+    return;
+  }else if (!moment(req.query.to).isValid() || !moment(req.query.from).isValid()) {
+    utils.sendJSONresponse(res, 400, {
+      error     : "Invalid dates."
+    });
+    return;
+  }else{
+    req.query.to = moment(req.query.to).add(1, 'day').format('YYYY-MM-DD');
+    request.get(BASE_URL+'/api/v1/agromet/history/'+req.params.stationId+'?from='+req.query.from+'&to='+req.query.to,
+      (error, response, body) => {
+        if(error){
+          console.log(error);
+          utils.sendJSONresponse(res, 404, {
+            message: "Data not found."
+          });
+          return;
+        }else{
+          let data = JSON.parse(body).data;
+          let groups = groupDataByDays(data);
+          let totalRadiation = 0;
+          groups.forEach((item) => {
+            item.data.forEach((item) => {
+              totalRadiation += +item.solarRadiationMax;
+            })
+          })
+
+          utils.sendJSONresponse(res, 200, {
+            indicator : "accumulatedSolarRadiation",
+            value     : totalRadiation
+          });
+          return;
+        }
+      }
+    )
+  }
+}

@@ -121,4 +121,68 @@ export class IndicatorsService {
       (response: Response) => response.json()
     );
   }
+
+  getDaysWindOver5kmh(stationId: number, from: string, to: string): any{
+    let headers = new Headers({  });
+    headers.append('Content-Type', 'application/json');
+    let params = new URLSearchParams();
+    params.append('from' , from);
+    params.append('to'   , to);
+    let options = new RequestOptions({
+      headers : headers,
+      params  : params
+    });
+    let url = this.baseURL+'/api/v1/indicators/daysWindOver5kmh/'+stationId;
+    return this.http.get(url, options).map(
+      (response: Response) => response.json()
+    );
+  }
+
+  getDaysWindOver10kmh(stationId: number, from: string, to: string): any{
+    let headers = new Headers({  });
+    headers.append('Content-Type', 'application/json');
+    let params = new URLSearchParams();
+    params.append('from' , from);
+    params.append('to'   , to);
+    let options = new RequestOptions({
+      headers : headers,
+      params  : params
+    });
+    let url = this.baseURL+'/api/v1/indicators/daysWindOver10kmh/'+stationId;
+    return this.http.get(url, options).map(
+      (response: Response) => response.json()
+    );
+  }
+
+  getAverageRelativeHumidity(stationId: number, from: string, to: string): any{
+    let headers = new Headers({  });
+    headers.append('Content-Type', 'application/json');
+    let params = new URLSearchParams();
+    params.append('from' , from);
+    params.append('to'   , to);
+    let options = new RequestOptions({
+      headers : headers,
+      params  : params
+    });
+    let url = this.baseURL+'/api/v1/indicators/averageRelativeHumidity/'+stationId;
+    return this.http.get(url, options).map(
+      (response: Response) => response.json()
+    );
+  }
+
+  getAccumulatedSolarRadiation(stationId: number, from: string, to: string): any{
+    let headers = new Headers({  });
+    headers.append('Content-Type', 'application/json');
+    let params = new URLSearchParams();
+    params.append('from' , from);
+    params.append('to'   , to);
+    let options = new RequestOptions({
+      headers : headers,
+      params  : params
+    });
+    let url = this.baseURL+'/api/v1/indicators/accumulatedSolarRadiation/'+stationId;
+    return this.http.get(url, options).map(
+      (response: Response) => response.json()
+    );
+  }
 }

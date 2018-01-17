@@ -72,164 +72,79 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6" *ngFor="let item of windIndicators">
       <div class="card fixed-height-indicator">
         <div class="card-block">
           <div class="row">
             <div class="col-4 text-center ">
               <i class="fa fa-dashboard fa-4x fa-fw text-info"></i>
             </div>
-            <div class="col-8">
-              Entre <strong> 2018-XX-XX y 2018-XX-XX </strong> hubieron
-              <strong>3 días</strong> con viento > 10 km/h
+            <div class="col-8" *ngIf="item.value !== undefined">
+              Entre <strong> {{item.fromString}} y {{item.toString}} </strong> hubieron <br/>
+              <span *ngIf="item.indicator == 'daysWindOver5kmh'">
+                <strong>{{item.value}} días </strong> con lluvia sobre 5 km/h
+              </span>
+              <span *ngIf="item.indicator == 'daysWindOver10kmh'">
+                <strong>{{item.value}} días </strong> con viento sobre 10 km/h
+              </span>
+              <br/>
             </div>
+            <div *ngIf="item.value === undefined">
+              <i class="fa fa-spinner fa-spin fa-4x"></i>
+              <p>Calculando indicador...</p>
+            </div>
+            <!--{{item | json}}-->
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6" *ngFor="let item of humidityIndicators">
       <div class="card fixed-height-indicator">
         <div class="card-block">
           <div class="row">
             <div class="col-4 text-center ">
-              <i class="fa fa-tint fa-4x fa-fw text-info"></i>
+              <i class="fa fa-cloud fa-4x fa-fw text-info"></i>
             </div>
-            <div class="col-8">
-              Entre <strong> 2018-XX-XX y 2018-XX-XX </strong> hubieron
-              <strong>3 días</strong> con lluvia sobre 10 mm
+            <div class="col-8" *ngIf="item.value !== undefined">
+              Entre <strong> {{item.fromString}} y {{item.toString}} </strong> hubo <br/>
+              <span *ngIf="item.indicator == 'averageRelativeHumidity'">
+                <strong>{{item.value | number : '1.2-2'}} % </strong> de humedad relativa promedio
+              </span>
+              <br/>
             </div>
+            <div *ngIf="item.value === undefined">
+              <i class="fa fa-spinner fa-spin fa-4x"></i>
+              <p>Calculando indicador...</p>
+            </div>
+            <!--{{item | json}}-->
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-md-6">
-      <div class="card fixed-height-indicator">
-        <div class="card-block">
-          <div class="row">
-            <div class="col-4 text-center ">
-              <i class="fa fa-tint fa-4x fa-fw text-info"></i>
-            </div>
-            <div class="col-8">
-              Entre <strong> 2018-XX-XX y 2018-XX-XX </strong> hubieron
-              <strong>250 mm</strong> de lluvia
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12 col-md-6">
-      <div class="card fixed-height-indicator">
-        <div class="card-block">
-          <div class="row">
-            <div class="col-4 text-center ">
-              <i class="fa fa-sun-o fa-4x fa-fw text-warning"></i>
-            </div>
-            <div class="col-8">
-              Entre <strong> 2018-XX-XX y 2018-XX-XX </strong> hubieron
-              <strong>7 días </strong> con Tempertura sobre 25°C
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6" *ngFor="let item of radiationIndicators">
       <div class="card fixed-height-indicator">
         <div class="card-block">
           <div class="row">
             <div class="col-4 text-center ">
               <i class="fa fa-sun-o fa-4x fa-fw text-warning"></i>
             </div>
-            <div class="col-8">
-              Entre <strong> 2018-XX-XX y 2018-XX-XX </strong> hubieron
-              <strong>4 días </strong> con Tempertura sobre 30°C
+            <div class="col-8" *ngIf="item.value !== undefined">
+              Entre <strong> {{item.fromString}} y {{item.toString}} </strong> hubo <br/>
+              <span *ngIf="item.indicator == 'accumulatedSolarRadiation'">
+                <strong>{{item.value | number : '1.2-2'}} (W/m²) </strong> de radiación acumulada
+              </span>
+              <br/>
             </div>
+            <div *ngIf="item.value === undefined">
+              <i class="fa fa-spinner fa-spin fa-4x"></i>
+              <p>Calculando indicador...</p>
+            </div>
+            <!--{{item | json}}-->
           </div>
         </div>
       </div>
     </div>
-
-    <div class="col-12 col-md-6">
-      <div class="card fixed-height-indicator">
-        <div class="card-block">
-          <div class="row">
-            <div class="col-4 text-center ">
-              <i class="fa fa-sun-o fa-4x fa-fw text-danger"></i>
-            </div>
-            <div class="col-8">
-              Entre <strong> 2018-XX-XX y 2018-XX-XX </strong> hubieron
-              <strong>2 días </strong> con Tempertura sobre 34°C
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--
-    <div class="col-6 col-md-2">
-      <div class="card text-center fixed-height-indicator">
-        <div class="card-block">
-          <i class="fa fa-tint fa-4x fa-fw text-info"></i><br/>
-          <strong>3 días<br/>lluvia > 10 mm</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6 col-md-2">
-      <div class="card text-center fixed-height-indicator">
-        <div class="card-block">
-          <i class="fa fa-tint fa-4x fa-fw text-info"></i><br/>
-          <strong>250 mm<br/>lluvia en el mes</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6 col-md-2">
-      <div class="card text-center fixed-height-indicator">
-        <div class="card-block">
-          <i class="fa fa-sun-o fa-4x fa-fw text-warning"></i><br/>
-          <strong>7 días<br/>T > 25°C</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6 col-md-2">
-      <div class="card text-center fixed-height-indicator">
-        <div class="card-block">
-          <i class="fa fa-sun-o fa-4x fa-fw text-warning"></i><br/>
-          <strong>4 días<br/>T > 30°C</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6 col-md-2">
-      <div class="card text-center fixed-height-indicator">
-        <div class="card-block">
-          <i class="fa fa-sun-o fa-4x fa-fw text-warning"></i><br/>
-          <strong>2 días<br/>T > 34°C</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6 col-md-2">
-      <div class="card text-center fixed-height-indicator">
-        <div class="card-block">
-          <i class="fa fa-dashboard fa-4x fa-fw text-info"></i><br/>
-          <strong>8 días<br/>viento > 5 km/h</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6 col-md-2">
-      <div class="card text-center fixed-height-indicator">
-        <div class="card-block">
-          <i class="fa fa-dashboard fa-4x fa-fw text-info"></i><br/>
-          <strong>3 días<br/>viento > 10 km/h</strong>
-        </div>
-      </div>
-    </div>
-    -->
   </div>
 </div>

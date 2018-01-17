@@ -106,4 +106,80 @@ export class UserSettingsService {
   setRainIndicators(indicators){
     localStorage.setItem('rain-indicators', JSON.stringify(indicators));
   }
+
+  getWindIndicators(){
+    let local = localStorage.getItem('wind-indicators');
+    if(local){
+      return JSON.parse(local);
+    }else{
+      let indicators = [
+        {
+          enabled   : false,
+          indicator : 'daysWindOver5kmh',
+          name      : 'Días con viento > 5 km/h',
+          from      : null,
+          to        : null
+        },
+        {
+          enabled   : false,
+          indicator : 'daysWindOver10kmh',
+          name      : 'Días con viento 10 > km/h',
+          from      : null,
+          to        : null
+        }
+      ]
+      localStorage.setItem('wind-indicators', JSON.stringify(indicators));
+      return indicators;
+    }
+  }
+
+  setWindIndicators(indicators){
+    localStorage.setItem('wind-indicators', JSON.stringify(indicators));
+  }
+
+  getHumidityIndicators(){
+    let local = localStorage.getItem('hum-indicators');
+    if(local){
+      return JSON.parse(local);
+    }else{
+      let indicators = [
+        {
+          enabled   : false,
+          indicator : 'averageRelativeHumidity',
+          name      : 'Promedio de humedad relativa del aire',
+          from      : null,
+          to        : null
+        }
+      ]
+      localStorage.setItem('hum-indicators', JSON.stringify(indicators));
+      return indicators;
+    }
+  }
+
+  setHumidityIndicators(indicators){
+    localStorage.setItem('hum-indicators', JSON.stringify(indicators));
+  }
+
+  getRadiationIndicators(){
+    let local = localStorage.getItem('rad-indicators');
+    if(local){
+      return JSON.parse(local);
+    }else{
+      let indicators = [
+        {
+          enabled   : false,
+          indicator : 'accumulatedSolarRadiation',
+          name      : 'Radiación solar acumulada',
+          from      : null,
+          to        : null
+        }
+      ]
+      localStorage.setItem('rad-indicators', JSON.stringify(indicators));
+      return indicators;
+    }
+  }
+
+  setRadiationIndicators(indicators){
+    localStorage.setItem('rad-indicators', JSON.stringify(indicators));
+  }
 }

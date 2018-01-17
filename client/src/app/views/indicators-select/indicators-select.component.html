@@ -79,79 +79,36 @@
   </div>
 </div>
 
-<!--
-<div class="animated fadeIn">
-  <div class="card">
-    <div class="card-block">
-      <h4 class="card-title">Precipitaciones</h4>
-
-      <div class="form-check">
-        <label class="switch switch-default switch-pill switch-primary">
-          <input type="checkbox" class="switch-input" checked>
-          <span class="switch-label"></span>
-          <span class="switch-handle"></span>
-        </label>
-        <label class="form-check-label">
-          Días con lluvia > 10 mm
-        </label>
-        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content)">
-          <i class="fa fa-calendar"></i>
-          Fechas
-        </button>
-      </div>
-
-      <div class="form-check">
-        <label class="switch switch-default switch-pill switch-primary">
-          <input type="checkbox" class="switch-input" checked>
-          <span class="switch-label"></span>
-          <span class="switch-handle"></span>
-        </label>
-        <label class="form-check-label">
-          Lluvia total del mes (mm)
-        </label>
-        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content)">
-          <i class="fa fa-calendar"></i>
-          Fechas
-        </button>
-      </div>
-
-
-    </div>
-  </div>
-</div>
-
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-block">
       <h4 class="card-title">Viento</h4>
 
-      <div class="form-check">
+      <!--<pre>{{temperatureIndicators | json}}</pre>-->
+
+      <div class="form-check" *ngFor="let ind of windIndicators">
         <label class="switch switch-default switch-pill switch-primary">
-          <input type="checkbox" class="switch-input" checked>
+          <input
+            name='checkbox'
+            type="checkbox"
+            class="switch-input"
+            [(ngModel)]="ind.enabled"
+            (change)='toggleIndicator(ind)'>
           <span class="switch-label"></span>
           <span class="switch-handle"></span>
         </label>
         <label class="form-check-label">
-          Días con viento > 5 kms/hora
+          {{ind.name}}
         </label>
-        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content)">
+        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
           Fechas
         </button>
       </div>
-
-      <div class="form-check">
-        <label class="switch switch-default switch-pill switch-primary">
-          <input type="checkbox" class="switch-input" checked>
-          <span class="switch-label"></span>
-          <span class="switch-handle"></span>
-        </label>
-        <label class="form-check-label">
-          Días con viento > 10 kms/hora
-        </label>
-        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content)">
-          <i class="fa fa-calendar"></i>
-          Fechas
+      <div *ngIf="!areWindsEqual()">
+        <button class="btn btn-sm btn-warning" (click)="saveChangesWind()">
+          <i class="fa fa-save"></i>
+          Guardar Cambios
         </button>
       </div>
     </div>
@@ -163,18 +120,31 @@
     <div class="card-block">
       <h4 class="card-title">Humedad Relativa</h4>
 
-      <div class="form-check">
+      <!--<pre>{{temperatureIndicators | json}}</pre>-->
+
+      <div class="form-check" *ngFor="let ind of humidityIndicators">
         <label class="switch switch-default switch-pill switch-primary">
-          <input type="checkbox" class="switch-input" checked>
+          <input
+            name='checkbox'
+            type="checkbox"
+            class="switch-input"
+            [(ngModel)]="ind.enabled"
+            (change)='toggleIndicator(ind)'>
           <span class="switch-label"></span>
           <span class="switch-handle"></span>
         </label>
         <label class="form-check-label">
-          Promedio diario de humedad relativa del aire
+          {{ind.name}}
         </label>
-        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content)">
+        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
           Fechas
+        </button>
+      </div>
+      <div *ngIf="!areHumidityEqual()">
+        <button class="btn btn-sm btn-warning" (click)="saveChangesHumidity()">
+          <i class="fa fa-save"></i>
+          Guardar Cambios
         </button>
       </div>
     </div>
@@ -184,26 +154,38 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-block">
-      <h4 class="card-title">Radiación Solar</h4>
+      <h4 class="card-title">Radiación</h4>
 
-      <div class="form-check">
+      <!--<pre>{{temperatureIndicators | json}}</pre>-->
+
+      <div class="form-check" *ngFor="let ind of radiationIndicators">
         <label class="switch switch-default switch-pill switch-primary">
-          <input type="checkbox" class="switch-input" checked>
+          <input
+            name='checkbox'
+            type="checkbox"
+            class="switch-input"
+            [(ngModel)]="ind.enabled"
+            (change)='toggleIndicator(ind)'>
           <span class="switch-label"></span>
           <span class="switch-handle"></span>
         </label>
         <label class="form-check-label">
-          Radiación solar acumulada
+          {{ind.name}}
         </label>
-        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content)">
+        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
           Fechas
+        </button>
+      </div>
+      <div *ngIf="!areRadiationEqual()">
+        <button class="btn btn-sm btn-warning" (click)="saveChangesRadiation()">
+          <i class="fa fa-save"></i>
+          Guardar Cambios
         </button>
       </div>
     </div>
   </div>
 </div>
--->
 
 <ng-template #modal_content let-c="close" let-d="dismiss">
   <div class="modal-header">

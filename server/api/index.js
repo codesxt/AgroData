@@ -68,4 +68,23 @@ router.get(
   ctrlIndicators.totalRain
 )
 
+router.get(
+  '/indicators/daysWindOver5kmh/:stationId',
+  ctrlIndicators.daysWindOver5kmh
+)
+
+router.get(
+  '/indicators/daysWindOver10kmh/:stationId',
+  ctrlIndicators.daysWindOver10kmh
+)
+
+router.get(
+  '/indicators/averageRelativeHumidity/:stationId',
+  ctrlIndicators.averageRelativeHumidity
+)
+
+router.get(
+  '/indicators/accumulatedSolarRadiation/:stationId',
+  ctrlIndicators.accumulatedSolarRadiation
+)
 module.exports = router;

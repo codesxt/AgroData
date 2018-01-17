@@ -11,6 +11,9 @@ import * as zpad from 'zpad';
 export class IndicatorsComponent implements OnInit{
   temperatureIndicators   : any = {};
   rainIndicators          : any = {};
+  windIndicators          : any = {};
+  humidityIndicators      : any = {};
+  radiationIndicators     : any = {};
   userPreferences         : any = null;
   constructor(
     private userSettingsService : UserSettingsService,
@@ -29,6 +32,15 @@ export class IndicatorsComponent implements OnInit{
       return item.enabled == true;
     });
     this.rainIndicators = this.userSettingsService.getRainIndicators().filter((item) => {
+      return item.enabled == true;
+    });
+    this.windIndicators = this.userSettingsService.getWindIndicators().filter((item) => {
+      return item.enabled == true;
+    });
+    this.humidityIndicators = this.userSettingsService.getHumidityIndicators().filter((item) => {
+      return item.enabled == true;
+    });
+    this.radiationIndicators = this.userSettingsService.getRadiationIndicators().filter((item) => {
       return item.enabled == true;
     });
     this.temperatureIndicators.forEach((item) => {
@@ -138,6 +150,85 @@ export class IndicatorsComponent implements OnInit{
       }
       if(item.indicator == 'daysRainOver10mm'){
         this.indicatorsService.getDaysRainOver10mm(
+          stationId,
+          item.from.year + "-" + zpad(item.from.month) + "-" + zpad(item.from.day),
+          item.to.year + "-" + zpad(item.to.month) + "-" + zpad(item.to.day)
+        )
+        .subscribe(
+          data   => {
+            item.value = data.value;
+          },
+          error  => {
+            console.log(error);
+            alert(error.json().error);
+          }
+        )
+      }
+    })
+    this.windIndicators.forEach((item) => {
+      item.fromString = zpad(item.from.day) + "-" + zpad(item.from.month) + "-" + item.from.year;
+      item.toString = zpad(item.to.day) + "-" + zpad(item.to.month) + "-" + item.to.year;
+
+      if(item.indicator == 'daysWindOver5kmh'){
+        this.indicatorsService.getDaysWindOver5kmh(
+          stationId,
+          item.from.year + "-" + zpad(item.from.month) + "-" + zpad(item.from.day),
+          item.to.year + "-" + zpad(item.to.month) + "-" + zpad(item.to.day)
+        )
+        .subscribe(
+          data   => {
+            item.value = data.value;
+          },
+          error  => {
+            console.log(error);
+            alert(error.json().error);
+          }
+        )
+      }
+      if(item.indicator == 'daysWindOver10kmh'){
+        this.indicatorsService.getDaysWindOver10kmh(
+          stationId,
+          item.from.year + "-" + zpad(item.from.month) + "-" + zpad(item.from.day),
+          item.to.year + "-" + zpad(item.to.month) + "-" + zpad(item.to.day)
+        )
+        .subscribe(
+          data   => {
+            item.value = data.value;
+          },
+          error  => {
+            console.log(error);
+            alert(error.json().error);
+          }
+        )
+      }
+    })
+    this.humidityIndicators.forEach((item) => {
+      item.fromString = zpad(item.from.day) + "-" + zpad(item.from.month) + "-" + item.from.year;
+      item.toString = zpad(item.to.day) + "-" + zpad(item.to.month) + "-" + item.to.year;
+
+      if(item.indicator == 'averageRelativeHumidity'){
+        this.indicatorsService.getAverageRelativeHumidity(
+          stationId,
+          item.from.year + "-" + zpad(item.from.month) + "-" + zpad(item.from.day),
+          item.to.year + "-" + zpad(item.to.month) + "-" + zpad(item.to.day)
+        )
+        .subscribe(
+          data   => {
+            item.value = data.value;
+          },
+          error  => {
+            console.log(error);
+            alert(error.json().error);
+          }
+        )
+      }
+    })
+    this.radiationIndicators.forEach((item) => {
+      item.fromString = zpad(item.from.day) + "-" + zpad(item.from.month) + "-" + item.from.year;
+      item.toString = zpad(item.to.day) + "-" + zpad(item.to.month) + "-" + item.to.year;
+
+      if(item.indicator == 'accumulatedSolarRadiation'){
+        this.indicatorsService.getAccumulatedSolarRadiation(
           stationId,
           item.from.year + "-" + zpad(item.from.month) + "-" + zpad(item.from.day),
           item.to.year + "-" + zpad(item.to.month) + "-" + zpad(item.to.day)
