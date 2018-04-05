@@ -24,7 +24,7 @@ export class IndicatorsComponent implements OnInit{
   ngOnInit(){
     this.userPreferences = this.userSettingsService.getUserPreferences();
     if(!this.userPreferences){
-      alert("Error: El usuario no ha seleccionado su estación favorita.");
+      alert("Error: Debe seleccionar una estación para ver los indicadores.");
       this.router.navigate(['/station-select']);
     }
     let stationId = this.userPreferences.station;

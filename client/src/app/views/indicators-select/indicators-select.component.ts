@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbDateStruct, NgbCalendar , NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbDatepickerI18n , NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+// import { NgbDateStruct, NgbCalendar , NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { UserSettingsService } from '../../services/user-settings.service';
 
 
@@ -15,9 +16,41 @@ const after = (one: NgbDateStruct, two: NgbDateStruct) =>
   !one || !two ? false : one.year === two.year ? one.month === two.month ? one.day === two.day
     ? false : one.day > two.day : one.month > two.month : one.year > two.year;
 
+const I18N_VALUES = {
+  'es': {
+    weekdays: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+    months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'],
+    months_full: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+  }
+};
+
+@Injectable()
+export class I18n {
+  language = 'es';
+}
+
+@Injectable()
+export class CustomDatepickerI18n extends NgbDatepickerI18n {
+
+  constructor(private _i18n: I18n) {
+    super();
+  }
+
+  getWeekdayShortName(weekday: number): string {
+    return I18N_VALUES[this._i18n.language].weekdays[weekday - 1];
+  }
+  getMonthShortName(month: number): string {
+    return I18N_VALUES[this._i18n.language].months[month - 1];
+  }
+  getMonthFullName(month: number): string {
+    return I18N_VALUES[this._i18n.language].months_full[month - 1];
+  }
+}
+
 
 @Component({
-  templateUrl: 'indicators-select.component.html'
+  templateUrl: 'indicators-select.component.html',
+  providers: [I18n, {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n}]
 })
 export class IndicatorsSelectComponent implements OnInit{
   hoveredDate : NgbDateStruct;
@@ -41,9 +74,10 @@ export class IndicatorsSelectComponent implements OnInit{
   radiationIndicators     : any = {};
   originalRadiationIndicators : any = {};
   constructor(
-    private calendar           : NgbCalendar,
+    private calendar           : NgbDatepickerI18n,
     private modalService       : NgbModal,
-    private userSettingsService : UserSettingsService
+    private userSettingsService : UserSettingsService,
+    private router              : Router
   ) { }
 
   ngOnInit(){
@@ -136,6 +170,10 @@ export class IndicatorsSelectComponent implements OnInit{
   saveChangesRadiation(){
     this.userSettingsService.setRadiationIndicators(this.radiationIndicators);
     this.originalRadiationIndicators = JSON.parse(JSON.stringify(this.radiationIndicators));
+  }
+
+  showIndicators(){
+    this.router.navigate(['/indicators']);
   }
 
   onDateChange(date: NgbDateStruct) {

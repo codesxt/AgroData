@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-block">
       <h4 class="card-title">Selección de Indicadores</h4>
-      <h6 class="card-subtitle mb-2 text-muted">Seleccione los indicadores que desea ver en la pantalla de Inicio</h6>
+      <h6 class="card-subtitle mb-2 text-muted">Seleccione los indicadores que desea ver en la sección <strong>Indicadores</strong></h6>
     </div>
   </div>
 </div>
@@ -10,9 +10,9 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-block">
-      <h4 class="card-title">Temperatura</h4>
+      <h4 class="card-title">Temperatura</h4><hr>
 
-      <!--<pre>{{temperatureIndicators | json}}</pre>-->
+      <!-- <pre>{{temperatureIndicators | json}}</pre> -->
 
       <div class="form-check" *ngFor="let ind of temperatureIndicators">
         <label class="switch switch-default switch-pill switch-primary">
@@ -28,16 +28,16 @@
         <label class="form-check-label">
           {{ind.name}}<br/>
           <span class="text-muted" *ngIf="ind.from && ind.to">
-          ({{ind.from.year}}-{{ind.from.month}}-{{ind.from.day}} - {{ind.to.year}}-{{ind.to.month}}-{{ind.to.day}})
+          ({{ind.from.day}}-{{ind.from.month}}-{{ind.from.year}} - {{ind.to.day}}-{{ind.to.month}}-{{ind.to.year}})
           </span>
         </label>
         <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
-          Fechas
+          <span class="hidden-text">Fechas</span>
         </button>
       </div>
       <div *ngIf="!areTemperaturesEqual()">
-        <button class="btn btn-sm btn-warning" (click)="saveChangesTemperature()">
+        <button class="btn btn-sm btn-warning btn-block" (click)="saveChangesTemperature()">
           <i class="fa fa-save"></i>
           Guardar Cambios
         </button>
@@ -49,7 +49,7 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-block">
-      <h4 class="card-title">Precipitaciones</h4>
+      <h4 class="card-title">Precipitaciones</h4><hr>
 
       <!--<pre>{{temperatureIndicators | json}}</pre>-->
 
@@ -67,16 +67,16 @@
         <label class="form-check-label">
           {{ind.name}}<br/>
           <span class="text-muted" *ngIf="ind.from && ind.to">
-          ({{ind.from.year}}-{{ind.from.month}}-{{ind.from.day}} - {{ind.to.year}}-{{ind.to.month}}-{{ind.to.day}})
+          ({{ind.from.day}}-{{ind.from.month}}-{{ind.from.year}} - {{ind.to.day}}-{{ind.to.month}}-{{ind.to.year}})
           </span>
         </label>
         <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
-          Fechas
+          <span class="hidden-text">Fechas</span>
         </button>
       </div>
       <div *ngIf="!areRainsEqual()">
-        <button class="btn btn-sm btn-warning" (click)="saveChangesRain()">
+        <button class="btn btn-sm btn-warning btn-block" (click)="saveChangesRain()">
           <i class="fa fa-save"></i>
           Guardar Cambios
         </button>
@@ -88,7 +88,7 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-block">
-      <h4 class="card-title">Viento</h4>
+      <h4 class="card-title">Viento</h4><hr>
 
       <!--<pre>{{temperatureIndicators | json}}</pre>-->
 
@@ -106,16 +106,16 @@
         <label class="form-check-label">
           {{ind.name}}<br/>
           <span class="text-muted" *ngIf="ind.from && ind.to">
-          ({{ind.from.year}}-{{ind.from.month}}-{{ind.from.day}} - {{ind.to.year}}-{{ind.to.month}}-{{ind.to.day}})
+          ({{ind.from.day}}-{{ind.from.month}}-{{ind.from.year}} - {{ind.to.day}}-{{ind.to.month}}-{{ind.to.year}})
           </span>
         </label>
         <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
-          Fechas
+          <span class="hidden-text">Fechas</span>
         </button>
       </div>
       <div *ngIf="!areWindsEqual()">
-        <button class="btn btn-sm btn-warning" (click)="saveChangesWind()">
+        <button class="btn btn-sm btn-warning btn-block" (click)="saveChangesWind()">
           <i class="fa fa-save"></i>
           Guardar Cambios
         </button>
@@ -127,7 +127,7 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-block">
-      <h4 class="card-title">Humedad Relativa</h4>
+      <h4 class="card-title">Humedad Relativa</h4><hr>
 
       <!--<pre>{{temperatureIndicators | json}}</pre>-->
 
@@ -145,16 +145,16 @@
         <label class="form-check-label">
           {{ind.name}}<br/>
           <span class="text-muted" *ngIf="ind.from && ind.to">
-          ({{ind.from.year}}-{{ind.from.month}}-{{ind.from.day}} - {{ind.to.year}}-{{ind.to.month}}-{{ind.to.day}})
+          ({{ind.from.day}}-{{ind.from.month}}-{{ind.from.year}} - {{ind.to.day}}-{{ind.to.month}}-{{ind.to.year}})
           </span>
         </label>
         <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
-          Fechas
+          <span class="hidden-text">Fechas</span>
         </button>
       </div>
       <div *ngIf="!areHumidityEqual()">
-        <button class="btn btn-sm btn-warning" (click)="saveChangesHumidity()">
+        <button class="btn btn-sm btn-warning btn-block" (click)="saveChangesHumidity()">
           <i class="fa fa-save"></i>
           Guardar Cambios
         </button>
@@ -166,7 +166,7 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-block">
-      <h4 class="card-title">Radiación</h4>
+      <h4 class="card-title">Radiación</h4><hr>
 
       <!--<pre>{{temperatureIndicators | json}}</pre>-->
 
@@ -184,21 +184,27 @@
         <label class="form-check-label">
           {{ind.name}}<br/>
           <span class="text-muted" *ngIf="ind.from && ind.to">
-          ({{ind.from.year}}-{{ind.from.month}}-{{ind.from.day}} - {{ind.to.year}}-{{ind.to.month}}-{{ind.to.day}})
+          ({{ind.from.day}}-{{ind.from.month}}-{{ind.from.year}} - {{ind.to.day}}-{{ind.to.month}}-{{ind.to.year}})
           </span>
         </label>
         <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
           <i class="fa fa-calendar"></i>
-          Fechas
+          <span class="hidden-text">Fechas</span>
         </button>
       </div>
       <div *ngIf="!areRadiationEqual()">
-        <button class="btn btn-sm btn-warning" (click)="saveChangesRadiation()">
+        <button class="btn btn-sm btn-warning btn-block" (click)="saveChangesRadiation()">
           <i class="fa fa-save"></i>
           Guardar Cambios
         </button>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="animated fadeIn">
+  <div class="col-xs-12 col-md-3 btn-indicators">
+    <button class="btn btn-primary btn-block btn-lg" (click)="showIndicators()">Ver Indicadores</button>
   </div>
 </div>
 

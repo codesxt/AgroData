@@ -1,7 +1,7 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-block">
-      <h4 class="card-title">Selección de Estación Favorita</h4>
+      <h4 class="card-title">Selección de Estación Favorita</h4><hr>
       <h6 class="card-subtitle mb-2 text-muted">Seleccione la estación más relevante para usted</h6>
       <div class="text-center" *ngIf="!stationsLoaded">
         <i class="fa fa-spinner fa-spin fa-5x fa-fw"></i><br/>
@@ -54,14 +54,85 @@
             </select>
           </div>
           <div class="col-12 col-sm-2">
-            <label for="stationselect">Click para actualizar:</label>
-            <button class="btn btn-primary" (click)="saveData()">
+            <label for="stationselect">&nbsp;</label>
+            <button class="btn btn-primary btn-block" (click)="saveData()">
               <i class="fa fa-save"></i>
               Guardar Estación
             </button>
           </div>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-block">
+      <h4 class="card-title">Pronósticos del Clima</h4><hr>
+      <span *ngIf="currentWeather">
+        <div class="row">
+          <div class="col-12 col-sm-3">
+            <table>
+              <thead>
+                <th colspan="2">
+                  <h4>Temperatura Actual</h4>
+                </th>
+              </thead>
+              <tbody>
+                <tr>
+                  <h5>{{currentWeather.name}}</h5>
+                </tr>
+                <tr>
+                  <td>
+                    <h4>{{currentWeather.main.temp}}°C</h4>
+                  </td>
+                  <td>
+                    <img src="http://openweathermap.org/img/w/{{currentWeather.weather[0].icon}}.png"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Presión Atmosférica
+                  </td>
+                  <td>
+                    : {{currentWeather.main.pressure}} hPa
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Humedad Relativa
+                  </td>
+                  <td>
+                    : {{currentWeather.main.humidity}} %
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Velocidad del Viento
+                  </td>
+                  <td>
+                    : {{currentWeather.wind.speed}} (m/s)
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-12 col-sm-9 weatherForecast" *ngIf="weatherForecast">
+            <h4>Pronóstico para días siguientes</h4>
+            <div class="row">
+              <div class="col-6 col-md-2 mb-3" *ngFor="let item of weatherForecast.list">
+                {{item.dt_txt | date: 'dd/MM/yyyy HH:mm'}} <br/>
+                <h4>{{item.main.temp}} °C</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </span>
+      <span *ngIf="!currentWeather">
+        Consultando pronósticos del clima...
+      </span>
     </div>
   </div>
 </div>
