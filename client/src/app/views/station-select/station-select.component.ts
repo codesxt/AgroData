@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AgrometService } from '../../services/agromet.service';
+import { OpenweatherService } from '../../services/openweather.service';
 import { UserSettingsService } from '../../services/user-settings.service';
 
 @Component({
@@ -14,10 +15,13 @@ export class StationSelectComponent implements OnInit{
   selectedCity    : number = null;
   selectedStation : number = null;
   stationsLoaded  : boolean = false;
+  currentWeather  : any     = null;
+  weatherForecast : any     = null;
   constructor(
     private agrometService      : AgrometService,
     private userSettingsService : UserSettingsService,
-    private router              : Router
+    private router              : Router,
+    private openweatherService  : OpenweatherService
   ) { }
 
   ngOnInit(){
@@ -41,6 +45,7 @@ export class StationSelectComponent implements OnInit{
             if(!this.selectedCity){
               this.selectedCity = this.cities[0].id;
             }
+            this.getCurrentWeather();
             this.agrometService.getStations(this.selectedRegion, this.selectedCity).subscribe(
               (response) => {
                 this.stations = response.stations;
@@ -114,6 +119,36 @@ export class StationSelectComponent implements OnInit{
         )
       },
       (error) => {
+
+      }
+    )
+  }
+
+  getCurrentWeather(){
+    let regionString = this.regions.filter((item)=>{
+      return item.id==this.selectedRegion
+    })[0].name;
+    let cityString = this.cities.filter((item)=>{
+      return item.id==this.selectedCity
+    })[0].name;
+    let queryString = cityString + "," + regionString +",Chile";
+    console.log("Looking for : " + queryString);
+    this.openweatherService.getCurrentWeather(queryString)
+    .subscribe(
+      response => {
+        this.currentWeather = response;
+      },
+      error    => {
+
+      }
+    )
+
+    this.openweatherService.get5DayForecast(cityString+",cl")
+    .subscribe(
+      response => {
+        this.weatherForecast = response;
+      },
+      error    => {
 
       }
     )

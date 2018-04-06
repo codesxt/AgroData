@@ -36,6 +36,7 @@ export class OpenweatherService {
     params.append('APPID', this._APIKEY);
     params.append('units', 'metric');
     params.append('cnt', '12');
+    params.append('lang', 'es');
     let options = new RequestOptions({
       headers : headers,
       params  : params
