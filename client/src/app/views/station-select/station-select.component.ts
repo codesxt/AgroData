@@ -90,10 +90,9 @@ export class StationSelectComponent implements OnInit{
           this.selectedStation = null;
         }
       },
-      (error) => {
-
-      }
+      (error) => {}
     )
+    this.getCurrentWeather(true)
   }
 
   onRegionUpdate(){
@@ -124,7 +123,7 @@ export class StationSelectComponent implements OnInit{
     )
   }
 
-  getCurrentWeather(){
+  getCurrentWeather(flag?: boolean){
     let regionString = this.regions.filter((item)=>{
       return item.id==this.selectedRegion
     })[0].name;
@@ -138,9 +137,7 @@ export class StationSelectComponent implements OnInit{
       response => {
         this.currentWeather = response;
       },
-      error    => {
-
-      }
+      error => {}
     )
 
     this.openweatherService.get5DayForecast(cityString+",cl")
@@ -148,10 +145,10 @@ export class StationSelectComponent implements OnInit{
       response => {
         this.weatherForecast = response;
       },
-      error    => {
-
-      }
+      error => {}
     )
+    if (flag)
+      console.log(this.currentWeather);
   }
 
   saveData(){

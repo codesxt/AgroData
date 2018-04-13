@@ -31,7 +31,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
       <h5>Selección de indicadores</h5>
       <ol>
         <li>Ir al indicador a visualizar.</li>
-        <li>Seleccionar el rango de fechas del indicador seleccionado.<br><strong>Obs: Presionar el día inicial y luego el día final</strong>.</li>
+        <li>Seleccionar el rango de fechas del indicador seleccionado.</li>
         <li>Activar el indicador.</li>
         <li>Repetir el proceso según sea necesario dentro del indicador.</li>
         <li>Finalizar la selección haciendo click en <strong>Guardar Cambios</strong>.</li>

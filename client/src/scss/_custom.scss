@@ -66,12 +66,19 @@ a, a:active, a:focus {
   color: $primary_color;
 }
 
+.sidebar .nav-link, .sidebar .navbar .dropdown-toggle, .navbar .sidebar .dropdown-toggle {
+  font-size: 0.8rem;
+}
+
 @media only screen and (max-width: 768px) {
   .hidden-text {
     display: none;
   }
   .weatherForecast {
     padding-top: 20px;
+  }
+  .form-check-label {
+    font-size: 0.75rem;
   }
 }
 

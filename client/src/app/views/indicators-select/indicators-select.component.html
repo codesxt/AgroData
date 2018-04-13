@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
   <div class="card">
-    <div class="card-block">
+    <div class="card-body">
       <h4 class="card-title">Selección de Indicadores</h4>
       <h6 class="card-subtitle mb-2 text-muted">Seleccione los indicadores que desea ver en la sección <strong>Indicadores</strong></h6>
     </div>
@@ -9,26 +9,23 @@
 
 <div class="animated fadeIn">
   <div class="card">
-    <div class="card-block">
+    <div class="card-body">
       <h4 class="card-title">Temperatura</h4><hr>
-
-      <!-- <pre>{{temperatureIndicators | json}}</pre> -->
-
       <div class="form-check" *ngFor="let ind of temperatureIndicators">
         <label class="switch switch-default switch-pill switch-primary">
           <input
-            name='checkbox'
-            type="checkbox"
-            class="switch-input"
-            [(ngModel)]="ind.enabled"
-            (change)='toggleIndicator(ind)'>
+          name='checkbox'
+          type="checkbox"
+          class="switch-input"
+          [(ngModel)]="ind.enabled"
+          (change)='toggleIndicator(ind)'>
           <span class="switch-label"></span>
           <span class="switch-handle"></span>
         </label>
         <label class="form-check-label">
           {{ind.name}}<br/>
           <span class="text-muted" *ngIf="ind.from && ind.to">
-          ({{ind.from.day}}-{{ind.from.month}}-{{ind.from.year}} - {{ind.to.day}}-{{ind.to.month}}-{{ind.to.year}})
+            ({{ind.from.day}}-{{ind.from.month}}-{{ind.from.year}} - {{ind.to.day}}-{{ind.to.month}}-{{ind.to.year}})
           </span>
         </label>
         <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
@@ -48,7 +45,7 @@
 
 <div class="animated fadeIn">
   <div class="card">
-    <div class="card-block">
+    <div class="card-body">
       <h4 class="card-title">Precipitaciones</h4><hr>
 
       <!--<pre>{{temperatureIndicators | json}}</pre>-->
@@ -87,7 +84,7 @@
 
 <div class="animated fadeIn">
   <div class="card">
-    <div class="card-block">
+    <div class="card-body">
       <h4 class="card-title">Viento</h4><hr>
 
       <!--<pre>{{temperatureIndicators | json}}</pre>-->
@@ -126,7 +123,7 @@
 
 <div class="animated fadeIn">
   <div class="card">
-    <div class="card-block">
+    <div class="card-body">
       <h4 class="card-title">Humedad Relativa</h4><hr>
 
       <!--<pre>{{temperatureIndicators | json}}</pre>-->
@@ -165,7 +162,7 @@
 
 <div class="animated fadeIn">
   <div class="card">
-    <div class="card-block">
+    <div class="card-body">
       <h4 class="card-title">Radiación</h4><hr>
 
       <!--<pre>{{temperatureIndicators | json}}</pre>-->
@@ -177,7 +174,7 @@
             type="checkbox"
             class="switch-input"
             [(ngModel)]="ind.enabled"
-            (change)='toggleIndicator(ind)'>
+            (change)='toggleIndicator(ind, modal_content)'>
           <span class="switch-label"></span>
           <span class="switch-handle"></span>
         </label>
@@ -216,20 +213,39 @@
     </button>
   </div>
   <div class="modal-body">
-    <ngb-datepicker
-      #dp
-      ngModel
-      (ngModelChange)="onDateChange($event)"
-      [displayMonths]="2"
-      [dayTemplate]="t"
-      name="dates">
-    </ngb-datepicker>
+    <form>
+      <div class="form-group">
+        <label>Fecha de inicio</label>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" name="fInicio" [(ngModel)]="fromDate" ngbDatepicker #dIni="ngbDatepicker" (ngModelChange)="onDateChange($event)" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="dIni.toggle()" type="button">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Fecha de termino</label>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" name="fTermino" [(ngModel)]="toDate" ngbDatepicker #dTer="ngbDatepicker" (ngModelChange)="onDateChange($event)" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="dTer.toggle()" type="button">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="c('Close click')">Guardar</button>
   </div>
 </ng-template>
-
 <ng-template
   #t
   let-date="date"
