@@ -122,7 +122,7 @@
             <h4>Pronóstico para días siguientes</h4>
             <div class="row">
               <div class="col-6 col-md-2 mb-3" *ngFor="let item of weatherForecast.list">
-                {{item.dt_txt | date: 'dd/MM/yyyy HH:mm'}} <br/>
+                {{item.dt*1000 | date: 'dd/MM/yyyy HH:mm'}} <br/>
                 <h4>{{item.main.temp}} °C</h4>
               </div>
             </div>
