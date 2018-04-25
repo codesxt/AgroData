@@ -87,4 +87,9 @@ router.get(
   '/indicators/accumulatedSolarRadiation/:stationId',
   ctrlIndicators.accumulatedSolarRadiation
 )
+
+router.get(
+  '/indicators/evapotranspiration/:stationId',
+  ctrlIndicators.evapotranspiration
+)
 module.exports = router;

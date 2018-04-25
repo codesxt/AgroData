@@ -28,7 +28,8 @@ import {
   AppSidebarFormComponent,
   AppSidebarHeaderComponent,
   AppSidebarMinimizerComponent,
-  APP_SIDEBAR_NAV
+  APP_SIDEBAR_NAV,
+  LoginComponent
 } from './components';
 
 const APP_COMPONENTS = [
@@ -41,7 +42,8 @@ const APP_COMPONENTS = [
   AppSidebarFormComponent,
   AppSidebarHeaderComponent,
   AppSidebarMinimizerComponent,
-  APP_SIDEBAR_NAV
+  APP_SIDEBAR_NAV,
+  LoginComponent
 ]
 
 // Import directives
@@ -93,7 +95,8 @@ import { IndicatorsService } from './services/indicators.service';
     AppComponent,
     ...APP_CONTAINERS,
     ...APP_COMPONENTS,
-    ...APP_DIRECTIVES
+    ...APP_DIRECTIVES,
+    LoginComponent
   ],
   providers: [{
     provide: LocationStrategy,

@@ -182,4 +182,26 @@ export class UserSettingsService {
   setRadiationIndicators(indicators){
     localStorage.setItem('rad-indicators', JSON.stringify(indicators));
   }
+
+  getEvapotranspirationIndicators() {
+    let local = localStorage.getItem('evapo-indicators');
+    if (local) {
+      return JSON.parse(local);
+    } else {
+      let indicators = [
+        {
+          enabled   : false,
+          indicator : 'evapotranspiration',
+          name      : 'Evapotranspiración del suelo',
+          from      : null,
+          to        : null
+        }
+      ]
+      localStorage.setItem('evapo-indicators', JSON.stringify(indicators));
+    }
+  }
+
+  setEvapotranspirationIndicators(indicators) {
+    localStorage.setItem('evapo-indicators', JSON.stringify(indicators));
+  }
 }

@@ -92,7 +92,7 @@ export class StationSelectComponent implements OnInit{
       },
       (error) => {}
     )
-    this.getCurrentWeather(true)
+    this.getCurrentWeather()
   }
 
   onRegionUpdate(){
@@ -123,7 +123,7 @@ export class StationSelectComponent implements OnInit{
     )
   }
 
-  getCurrentWeather(flag?: boolean){
+  getCurrentWeather(){
     let regionString = this.regions.filter((item)=>{
       return item.id==this.selectedRegion
     })[0].name;
@@ -147,8 +147,6 @@ export class StationSelectComponent implements OnInit{
       },
       error => {}
     )
-    if (flag)
-      console.log(this.currentWeather);
   }
 
   saveData(){

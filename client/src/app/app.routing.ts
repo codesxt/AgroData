@@ -7,7 +7,21 @@ import {
   SimpleLayoutComponent
 } from './containers';
 
+import {
+  LoginComponent
+} from './components';
+
 export const routes: Routes = [
+  // {
+  //   path: '',
+  //   redirectTo: 'login',
+  //   pathMatch: 'full',
+  // }
+  // {
+  //   path: '',
+  //   component: LoginComponent
+  // }
+  // },
   {
     path: '',
     redirectTo: 'station-select',

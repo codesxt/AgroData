@@ -9,12 +9,13 @@ import * as zpad from 'zpad';
   templateUrl: 'indicators.component.html'
 })
 export class IndicatorsComponent implements OnInit{
-  temperatureIndicators   : any = {};
-  rainIndicators          : any = {};
-  windIndicators          : any = {};
-  humidityIndicators      : any = {};
-  radiationIndicators     : any = {};
-  userPreferences         : any = null;
+  temperatureIndicators         : any = {};
+  rainIndicators                : any = {};
+  windIndicators                : any = {};
+  humidityIndicators            : any = {};
+  radiationIndicators           : any = {};
+  evapotranspirationIndicators  : any = {};
+  userPreferences               : any = null;
   constructor(
     private userSettingsService : UserSettingsService,
     private indicatorsService   : IndicatorsService,
@@ -41,6 +42,9 @@ export class IndicatorsComponent implements OnInit{
       return item.enabled == true;
     });
     this.radiationIndicators = this.userSettingsService.getRadiationIndicators().filter((item) => {
+      return item.enabled == true;
+    });
+    this.evapotranspirationIndicators = this.userSettingsService.getEvapotranspirationIndicators().filter((item) => {
       return item.enabled == true;
     });
     this.temperatureIndicators.forEach((item) => {
@@ -229,6 +233,27 @@ export class IndicatorsComponent implements OnInit{
 
       if(item.indicator == 'accumulatedSolarRadiation'){
         this.indicatorsService.getAccumulatedSolarRadiation(
+          stationId,
+          item.from.year + "-" + zpad(item.from.month) + "-" + zpad(item.from.day),
+          item.to.year + "-" + zpad(item.to.month) + "-" + zpad(item.to.day)
+        )
+        .subscribe(
+          data   => {
+            item.value = data.value;
+          },
+          error  => {
+            console.log(error);
+            alert(error.json().error);
+          }
+        )
+      }
+    })
+    this.evapotranspirationIndicators.forEach((item) => {
+      item.fromString = zpad(item.from.day) + "-" + zpad(item.from.month) + "-" + item.from.year;
+      item.toString = zpad(item.to.day) + "-" + zpad(item.to.month) + "-" + item.to.year;
+
+      if(item.indicator == 'evapotranspiration'){
+        this.indicatorsService.getEvapotranspiration(
           stationId,
           item.from.year + "-" + zpad(item.from.month) + "-" + zpad(item.from.day),
           item.to.year + "-" + zpad(item.to.month) + "-" + zpad(item.to.day)
