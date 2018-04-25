@@ -96,6 +96,9 @@ export class IndicatorsSelectComponent implements OnInit{
   radiationIndicators     : any = {};
   originalRadiationIndicators : any = {};
 
+  evapotranspirationIndicators  : any = {};
+  originalEvapotranspirationIndicators  : any = {};
+
   constructor(
     private modalService       : NgbModal,
     private userSettingsService : UserSettingsService,
@@ -122,6 +125,10 @@ export class IndicatorsSelectComponent implements OnInit{
     indicators  = this.userSettingsService.getRadiationIndicators();
     this.radiationIndicators = indicators;
     this.originalRadiationIndicators = JSON.parse(JSON.stringify(indicators));
+
+    indicators = this.userSettingsService.getEvapotranspirationIndicators();
+    this.evapotranspirationIndicators = indicators;
+    this.originalEvapotranspirationIndicators = JSON.parse(JSON.stringify(indicators));
 
   }
 
@@ -152,6 +159,12 @@ export class IndicatorsSelectComponent implements OnInit{
     }
   }
 
+  toggleIndicatorDate() {
+    console.log('test');
+    // this.toDate = new Date();
+    // console.log(this.toDate);
+  }
+
   areTemperaturesEqual(){
     return JSON.stringify(this.temperatureIndicators) == JSON.stringify(this.originalTemperatureIndicators);
   }
@@ -170,6 +183,10 @@ export class IndicatorsSelectComponent implements OnInit{
 
   areRadiationEqual(){
     return JSON.stringify(this.radiationIndicators) == JSON.stringify(this.originalRadiationIndicators);
+  }
+
+  areEvapotranspirationEqual(){
+    return JSON.stringify(this.evapotranspirationIndicators) == JSON.stringify(this.originalEvapotranspirationIndicators);
   }
 
   saveChangesTemperature(){
@@ -195,6 +212,11 @@ export class IndicatorsSelectComponent implements OnInit{
   saveChangesRadiation(){
     this.userSettingsService.setRadiationIndicators(this.radiationIndicators);
     this.originalRadiationIndicators = JSON.parse(JSON.stringify(this.radiationIndicators));
+  }
+
+  saveChangesEvapotranspiration() {
+    this.userSettingsService.setEvapotranspirationIndicators(this.evapotranspirationIndicators);
+    this.originalEvapotranspirationIndicators = JSON.parse(JSON.stringify(this.evapotranspirationIndicators));
   }
 
   showIndicators(){

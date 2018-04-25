@@ -1,5 +1,11 @@
 <div class="animated fadeIn">
   <div class="card">
+    <div class="card-block text-justify">
+      <h4>Bienvenido a AgroData</h4>
+      AgroData la aplicación que te permite monitorear los indicadores de temperatura, precipitaciones, viento, humedad relativa, radiación y evapotranspiración de tú estación favorita.
+    </div>
+  </div>
+  <div class="card">
     <div class="card-block">
       <h4 class="card-title">Indicadores Agronómicos</h4>
       <h6 class="card-subtitle mb-2 text-muted">Aqui se muestran indicadores seleccionados</h6>
@@ -138,6 +144,30 @@
               Entre <strong> {{item.fromString}} y {{item.toString}} </strong> hubo <br/>
               <span *ngIf="item.indicator == 'accumulatedSolarRadiation'">
                 <strong>{{item.value | number : '1.2-2'}} (MJ/m²) </strong> de radiación acumulada
+              </span>
+              <br/>
+            </div>
+            <div *ngIf="item.value === undefined" class="text-center">
+              <i class="fa fa-spinner fa-spin fa-4x"></i>
+              <p>Calculando indicador...</p>
+            </div>
+            <!--{{item | json}}-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6" *ngFor="let item of evapotranspirationIndicators">
+      <div class="card fixed-height-indicator">
+        <div class="card-block">
+          <div class="row">
+            <div class="col-4 text-center ">
+              <i class="fa fa-tint fa-4x fa-fw text-info"></i>
+            </div>
+            <div class="col-8" *ngIf="item.value !== undefined">
+              Entre <strong> {{item.fromString}} y {{item.toString}} </strong> hubo en promedio 
+              <span *ngIf="item.indicator == 'evapotranspiration'">
+                <strong>{{item.value}} (mm/día) </strong> de evapotranspiración
               </span>
               <br/>
             </div>

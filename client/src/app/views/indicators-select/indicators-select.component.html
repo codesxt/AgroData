@@ -1,5 +1,11 @@
 <div class="animated fadeIn">
   <div class="card">
+    <div class="card-block text-justify">
+      <h4>Bienvenido a AgroData</h4>
+      AgroData la aplicación que te permite monitorear los indicadores de temperatura, precipitaciones, viento, humedad relativa, radiación y evapotranspiración de tú estación favorita.
+    </div>
+  </div>
+  <div class="card">
     <div class="card-body">
       <h4 class="card-title">Selección de Indicadores</h4>
       <h6 class="card-subtitle mb-2 text-muted">Seleccione los indicadores que desea ver en la sección <strong>Indicadores</strong></h6>
@@ -200,6 +206,42 @@
 </div>
 
 <div class="animated fadeIn">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Evapotranspiración</h4><hr>
+      <div class="form-check" *ngFor="let ind of evapotranspirationIndicators">
+        <label class="switch switch-default switch-pill switch-primary">
+          <input
+            name='checkbox'
+            type="checkbox"
+            class="switch-input"
+            [(ngModel)]="ind.enabled"
+            (change)='toggleIndicator(ind, modal_content)'>
+          <span class="switch-label"></span>
+          <span class="switch-handle"></span>
+        </label>
+        <label class="form-check-label">
+          {{ind.name}}<br/>
+          <span class="text-muted" *ngIf="ind.from && ind.to">
+          ({{ind.from.day}}-{{ind.from.month}}-{{ind.from.year}} - {{ind.to.day}}-{{ind.to.month}}-{{ind.to.year}})
+          </span>
+        </label>
+        <button class="btn btn-sm btn-primary float-right" (click)="open(modal_content, ind)">
+          <i class="fa fa-calendar"></i>
+          <span class="hidden-text">Fechas</span>
+        </button>
+      </div>
+      <div *ngIf="!areEvapotranspirationEqual()">
+        <button class="btn btn-sm btn-warning btn-block" (click)="saveChangesEvapotranspiration()">
+          <i class="fa fa-save"></i>
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="animated fadeIn">
   <div class="col-xs-12 col-md-3 btn-indicators">
     <button class="btn btn-primary btn-block btn-lg" (click)="showIndicators()">Ver Indicadores</button>
   </div>
@@ -231,6 +273,18 @@
         <label>Fecha de termino</label>
       </div>
       <div class="form-group">
+        <div class="input-group">
+          <label class="switch switch-default switch-pill switch-primary">
+            <input
+              name='checkbox'
+              type="checkbox"
+              class="switch-input"
+              (change)='toggleIndicatorDate()'>
+            <span class="switch-label"></span>
+            <span class="switch-handle"></span>
+          </label>
+          &nbsp;Hasta la fecha
+        </div>
         <div class="input-group">
           <input class="form-control" name="fTermino" [(ngModel)]="toDate" ngbDatepicker #dTer="ngbDatepicker" (ngModelChange)="onDateChange($event)" readonly>
           <div class="input-group-append">

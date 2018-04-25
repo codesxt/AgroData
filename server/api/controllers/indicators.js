@@ -590,3 +590,56 @@ module.exports.accumulatedSolarRadiation = (req, res) => {
     )
   }
 }
+
+module.exports.evapotranspiration = (req, res) =>  {
+  console.log(req.query);
+  console.log(req.params);
+  if(!(req.query.to && req.query.from)){
+    utils.sendJSONresponse(res, 400, {
+      error     : "Missing parameters."
+    });
+    return;
+  }else if (!moment(req.query.to).isValid() || !moment(req.query.from).isValid()) {
+    utils.sendJSONresponse(res, 400, {
+      error     : "Invalid dates."
+    });
+    return;
+  }else{
+    req.query.to = moment(req.query.to).add(1, 'day').format('YYYY-MM-DD');
+    request.get(BASE_URL+'/api/v1/agromet/history/'+req.params.stationId+'?from='+req.query.from+'&to='+req.query.to,
+      (error, response, body) => {
+        if(error){
+          console.log(error);
+          utils.sendJSONresponse(res, 404, {
+            message: "Data not found."
+          });
+          return;
+        }else{
+          let data = JSON.parse(body).data;
+          let groups = groupDataByDays(data);
+          let totalEvapotranspiration = 0;
+          let rse = [17.7,15.95,13.35,10.1,7.6,6.4,6.85,8.9,11.95,14.9,17.1,18.1];
+          groups.forEach((item) => {
+            item.data.forEach((item) => {
+              let lastHour = new Date(item.date).toLocaleTimeString();
+              if (lastHour === '8:00:00 PM') {
+                console.log(lastHour);
+                console.log(item);
+                totalEvapotranspiration += 0.0023 * (+item.airTemperatureAvg + 17.78) * rse[new Date().getMonth()] * Math.pow((+item.temperatureMax - +item.temperatureMin), 0.5);
+                console.log("Evapo: " + totalEvapotranspiration + ", Tprom: " + item.airTemperatureAvg + ", RSE: " + rse[new Date().getMonth()] + ", Tmax: " + item.temperatureMax + ", Tmin: " + item.temperatureMin);
+              }
+            })
+          })
+          console.log(totalEvapotranspiration.toFixed(2));
+          totalEvapotranspiration = totalEvapotranspiration.toFixed(2);
+
+          utils.sendJSONresponse(res, 200, {
+            indicator : "evapotranspiration",
+            value     : totalEvapotranspiration
+          });
+          return;
+        }
+      }
+    )
+  }
+}
