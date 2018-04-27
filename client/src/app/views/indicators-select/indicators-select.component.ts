@@ -106,6 +106,9 @@ export class IndicatorsSelectComponent implements OnInit{
   ) { }
 
   ngOnInit(){
+    let userLogged = this.userSettingsService.getUserLogged();
+    if (!userLogged.login) this.router.navigate(['/login']);
+
     let indicators  = this.userSettingsService.getTemperatureIndicators();
     this.temperatureIndicators = indicators;
     this.originalTemperatureIndicators = JSON.parse(JSON.stringify(indicators));
@@ -160,9 +163,13 @@ export class IndicatorsSelectComponent implements OnInit{
   }
 
   toggleIndicatorDate() {
-    console.log('test');
-    // this.toDate = new Date();
-    // console.log(this.toDate);
+    var today = new Date();
+    if (this.fromDate == null) {
+      this.fromDate = { day: today.getUTCDate(), month: today.getUTCMonth() + 1, year: today.getUTCFullYear()};
+      this.selectedIndicator.from = this.fromDate;
+    }
+    this.toDate = { day: today.getUTCDate(), month: today.getUTCMonth() + 1, year: today.getUTCFullYear()};
+    this.selectedIndicator.to = this.toDate;
   }
 
   areTemperaturesEqual(){
@@ -223,17 +230,12 @@ export class IndicatorsSelectComponent implements OnInit{
     this.router.navigate(['/indicators']);
   }
 
-  onDateChange(date: NgbDateStruct) {
-    if (!this.selectedIndicator.from && !this.selectedIndicator.to) {
-      this.fromDate = date;
-      this.selectedIndicator.from = this.fromDate; //
-    } else if (this.selectedIndicator.from && !this.selectedIndicator.to && after(date, this.selectedIndicator.from)) {
-      this.toDate = date;
-      this.selectedIndicator.to = this.toDate;
-    } else {
-      this.toDate = null;
+  onDateChange(date: NgbDateStruct, dateInput: String) {
+    if (dateInput === 'dIni') {
       this.fromDate = date;
       this.selectedIndicator.from = this.fromDate;
+    } else {
+      this.toDate = date;
       this.selectedIndicator.to = this.toDate;
     }
   }

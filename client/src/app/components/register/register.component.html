@@ -1,0 +1,40 @@
+
+<div class="app flex-row align-items-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card-group">
+          <div class="card p-4">
+            <div class="card-body">
+              <!-- <img src="assets/img/logo.png" class="thinkAgroLoginLogo"> -->
+              <h3>Crear nueva cuenta</h3>
+              <p class="text-muted">Complete los campos a continuación para crear su cuenta</p>
+              <form>
+                <div class="form-group">
+                  <input type="text" name="name" [(ngModel)] = "user.name" placeholder="Nombre" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <input type="email" name="email" [(ngModel)] = "user.email" placeholder="Correo Electrónico" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <input type="text" name="company" [(ngModel)] = "user.company" placeholder="Empresa" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <input type="tel" name="phone" [(ngModel)] = "user.phone" placeholder="Teléfono" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <input type="password" name="password" [(ngModel)] = "user.password" placeholder="Contraseña" class="form-control" required>
+                </div>
+              </form>
+              <div class="row">
+                <div class="col-12 col-sm-5">
+                  <button class="btn btn-primary px-4 btn-block" type="button" (click)="createUser()">Registrarse</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

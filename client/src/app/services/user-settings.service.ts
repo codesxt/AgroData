@@ -8,6 +8,21 @@ export class UserSettingsService {
     private http: Http
   ) { }
 
+  setUserLogged(flag) {
+    let preferences = {
+      login : flag
+    }
+    localStorage.setItem('login-settings', JSON.stringify(preferences));
+  }
+
+  getUserLogged() {
+    let local = localStorage.getItem('login-settings');
+    if (local) {
+      return JSON.parse(local);
+    } else
+      return null;
+  }
+
   setUserPreferences(region, city, station){
     let preferences = {
       region  : region,
@@ -37,35 +52,40 @@ export class UserSettingsService {
           indicator : 'daysTempGT25Deg',
           name      : 'Días con Temperatura > 25°C',
           from      : null,
-          to        : null
+          to        : null,
+          untilDate : false
         },
         {
           enabled   : false,
           indicator : 'daysTempGT30Deg',
           name      : 'Días con Temperatura > 30°C',
           from      : null,
-          to        : null
+          to        : null,
+          untilDate : false
         },
         {
           enabled   : false,
           indicator : 'daysTempGT34Deg',
           name      : 'Días con Temperatura > 34°C',
           from      : null,
-          to        : null
+          to        : null,
+          untilDate : false
         },
         {
           enabled   : false,
           indicator : 'degreeDays',
           name      : 'Suma de Grados Día',
           from      : null,
-          to        : null
+          to        : null,
+          untilDate : false
         },
         {
           enabled   : false,
           indicator : 'coldHours',
           name      : 'Suma de Horas de Frío',
           from      : null,
-          to        : null
+          to        : null,
+          untilDate : false
         }
       ]
       localStorage.setItem('temp-indicators', JSON.stringify(indicators));
@@ -88,14 +108,16 @@ export class UserSettingsService {
           indicator : 'daysRainOver10mm',
           name      : 'Días con lluvia > 10 mm',
           from      : null,
-          to        : null
+          to        : null,
+          untilDate : false
         },
         {
           enabled   : false,
           indicator : 'totalRain',
           name      : 'Lluvia total del mes (mm)',
           from      : null,
-          to        : null
+          to        : null,
+          untilDate : false
         }
       ]
       localStorage.setItem('rain-indicators', JSON.stringify(indicators));
@@ -118,14 +140,16 @@ export class UserSettingsService {
           indicator : 'daysWindOver5kmh',
           name      : 'Días con viento > 5 km/h',
           from      : null,
-          to        : null
+          to        : null,
+          untilDate : false
         },
         {
           enabled   : false,
           indicator : 'daysWindOver10kmh',
           name      : 'Días con viento 10 > km/h',
           from      : null,
-          to        : null
+          to        : null,
+          untilDate : false
         }
       ]
       localStorage.setItem('wind-indicators', JSON.stringify(indicators));
@@ -148,7 +172,8 @@ export class UserSettingsService {
           indicator : 'averageRelativeHumidity',
           name      : 'Promedio de humedad relativa del aire',
           from      : null,
-          to        : null
+          to        : null,
+          untilDate : false
         }
       ]
       localStorage.setItem('hum-indicators', JSON.stringify(indicators));
@@ -171,7 +196,8 @@ export class UserSettingsService {
           indicator : 'accumulatedSolarRadiation',
           name      : 'Radiación solar acumulada',
           from      : null,
-          to        : null
+          to        : null,
+          untilDate : false
         }
       ]
       localStorage.setItem('rad-indicators', JSON.stringify(indicators));
@@ -194,10 +220,12 @@ export class UserSettingsService {
           indicator : 'evapotranspiration',
           name      : 'Evapotranspiración del suelo',
           from      : null,
-          to        : null
+          to        : null,
+          untilDate : false
         }
       ]
       localStorage.setItem('evapo-indicators', JSON.stringify(indicators));
+      return indicators;
     }
   }
 
