@@ -19,7 +19,7 @@ export class UserSettingsService {
     let local = localStorage.getItem('login-settings');
     if (local) {
       return JSON.parse(local);
-    } else
+    } else {
       let preferences = {
         login : false
       }
