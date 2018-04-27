@@ -30,6 +30,7 @@ export class StationSelectComponent implements OnInit{
 
     if (this.userSettingsService.getUserLogged().login && this.userSettingsService.getUserPreferences) {
       this.router.navigate(['/indicators']);
+    }
 
     let userPreferences  = this.userSettingsService.getUserPreferences();
     if(userPreferences){
