@@ -1,6 +1,6 @@
 const utils = require('./utils');
 const request = require('request');
-const p50rseString = require('xml2js').parseString;
+const parseString = require('xml2js').parseString;
 const moment = require('moment');
 
 module.exports.getHistory = (req, res) => {
