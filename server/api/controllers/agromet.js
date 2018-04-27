@@ -1,6 +1,6 @@
 const utils = require('./utils');
 const request = require('request');
-const parseString = require('xml2js').parseString;
+const p50rseString = require('xml2js').parseString;
 const moment = require('moment');
 
 module.exports.getHistory = (req, res) => {
@@ -39,6 +39,12 @@ module.exports.getHistory = (req, res) => {
                 console.log(err);
                 console.log("Error parsing body:");
                 console.log(body);
+                utils.sendJSONresponse(res, 404, {
+                  message: "Ocurrió un error al procesar los datos de Agromet."
+                });
+                return;
+              }
+              if (result.estacion === undefined) {
                 utils.sendJSONresponse(res, 404, {
                   message: "Ocurrió un error al procesar los datos de Agromet."
                 });

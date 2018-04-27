@@ -25,6 +25,9 @@ export class StationSelectComponent implements OnInit{
   ) { }
 
   ngOnInit(){
+    let userLogged = this.userSettingsService.getUserLogged();
+    if (!userLogged.login) this.router.navigate(['/login']);
+
     let userPreferences  = this.userSettingsService.getUserPreferences();
     if(userPreferences){
       this.selectedRegion  = userPreferences.region;

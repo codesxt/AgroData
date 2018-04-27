@@ -8,32 +8,20 @@ import {
 } from './containers';
 
 import {
-  LoginComponent
+  LoginComponent,
+  RegisterComponent
 } from './components';
 
 export const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: 'login',
-  //   pathMatch: 'full',
-  // }
-  // {
-  //   path: '',
-  //   component: LoginComponent
-  // }
-  // },
-  {
-    path: '',
-    redirectTo: 'station-select',
-    pathMatch: 'full',
-  },
-  {
-    path: '',
-    component: FullLayoutComponent,
-    data: {
-      title: 'Inicio'
-    },
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: '', component: FullLayoutComponent,
     children: [
+      {
+        path: '',
+        redirectTo: 'station-select',
+        pathMatch: 'full'
+      },
       {
         path: 'indicators',
         loadChildren: './views/indicators/indicators.module#IndicatorsModule'
@@ -55,8 +43,7 @@ export const routes: Routes = [
         path: 'odb',
         loadChildren: './views/odb/odb.module#OdbModule'
       }
-    ]
-  }
+    ]}
 ];
 
 @NgModule({

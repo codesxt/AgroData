@@ -54,6 +54,17 @@ a, a:active, a:focus {
   border-color: $seconday_color;
 }
 
+.btn-primary:not([disabled]):not(.disabled):active, .btn-primary:not([disabled]):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+  background-color: $seconday_color;
+  border-color: $seconday_color;
+  box-shadow: none;
+}
+
+.bg-thinkagro {
+  background-color: $primary_color;
+  border-color: $primary_color;
+}
+
 .sidebar .nav-link:hover, .sidebar .navbar .dropdown-toggle:hover, .navbar .sidebar .dropdown-toggle:hover {
   background-color: $primary_color;
 }
@@ -90,4 +101,13 @@ a, a:active, a:focus {
   .brand-minimized .app-header.navbar .navbar-brand {
     background-image: url('../assets/img/logo-symbol.png');
   }
+}
+
+.thinkAgroLoginLogo {
+  width: 100%;
+  padding-bottom: 1.5em;
+}
+
+.sidebar .sidebar-footer {
+  padding: 0;
 }

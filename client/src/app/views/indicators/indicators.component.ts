@@ -23,6 +23,9 @@ export class IndicatorsComponent implements OnInit{
   ) { }
 
   ngOnInit(){
+    let userLogged = this.userSettingsService.getUserLogged();
+    if (!userLogged.login) this.router.navigate(['/login']);
+
     this.userPreferences = this.userSettingsService.getUserPreferences();
     if(!this.userPreferences){
       alert("Error: Debe seleccionar una estación para ver los indicadores.");

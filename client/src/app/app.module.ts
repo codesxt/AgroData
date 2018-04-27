@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule, LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpModule }    from '@angular/http';
+import { HttpClientModule }    from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -29,7 +30,8 @@ import {
   AppSidebarHeaderComponent,
   AppSidebarMinimizerComponent,
   APP_SIDEBAR_NAV,
-  LoginComponent
+  LoginComponent,
+  RegisterComponent
 } from './components';
 
 const APP_COMPONENTS = [
@@ -43,7 +45,8 @@ const APP_COMPONENTS = [
   AppSidebarHeaderComponent,
   AppSidebarMinimizerComponent,
   APP_SIDEBAR_NAV,
-  LoginComponent
+  LoginComponent,
+  RegisterComponent
 ]
 
 // Import directives
@@ -71,6 +74,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
+// Import custom models
+import { User } from './models/user.model';
 
 // Import custom services
 import { AgrometService } from './services/agromet.service';
@@ -89,14 +94,16 @@ import { IndicatorsService } from './services/indicators.service';
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    HttpClientModule
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
     ...APP_COMPONENTS,
     ...APP_DIRECTIVES,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   providers: [{
     provide: LocationStrategy,
@@ -105,7 +112,8 @@ import { IndicatorsService } from './services/indicators.service';
     AgrometService,
     OpenweatherService,
     UserSettingsService,
-    IndicatorsService
+    IndicatorsService,
+    User
   ],
   bootstrap: [ AppComponent ]
 })
