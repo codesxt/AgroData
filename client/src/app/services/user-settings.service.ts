@@ -20,7 +20,11 @@ export class UserSettingsService {
     if (local) {
       return JSON.parse(local);
     } else
-      return null;
+      let preferences = {
+        login : false
+      }
+      return preferences;
+    }
   }
 
   setUserPreferences(region, city, station){
