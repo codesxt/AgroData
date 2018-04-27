@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
   constructor(
   	private registerService 	: RegisterService,
   	private router			: Router,
-  	private user 			: User
+  	public user 			: User
   ) {
   	this.user = new User();
   }
